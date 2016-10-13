@@ -28,3 +28,8 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+
+#Wwise
+Assets/Wwise/Editor/ProjectData/*
+Assets/Wwise/WwiseProject/Originals/
+Assets/Wwise/WwiseProject/.cache/
