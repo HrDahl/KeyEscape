@@ -18,6 +18,14 @@ public class GameManager : MonoBehaviour
 
 	public bool isPaused = false;
 
+	void OnEnable ()
+	{
+	}
+
+	void OnDisable ()
+	{
+	}
+
 	void Start ()
 	{
         if (_instance != null)
@@ -31,10 +39,8 @@ public class GameManager : MonoBehaviour
 
 	void Awake ()
 	{
-        
         Time.timeScale = 1;
-		Screen.sleepTimeout = SleepTimeout.NeverSleep;
-
+		EventManager.Instance.TriggerEvent(new InstantiateGame());
 	}
 
 	void Update () {
@@ -69,14 +75,6 @@ public class GameManager : MonoBehaviour
 			ResumeGame ();
 		}
 	}
-
-	void OnEnable ()
-	{
-    }
-
-	void OnDisable ()
-	{
-    }
 
    	private void PauseGame ()
 	{
