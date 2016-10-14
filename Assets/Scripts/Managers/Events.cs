@@ -10,4 +10,10 @@ public class TakeDamageEvent : GameEvent
         this.message = message;
     }
 }
+
+public class InstantiateGame : GameEvent {
+
+	public InstantiateGame () {}
+
+}
     
