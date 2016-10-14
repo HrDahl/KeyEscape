@@ -30,15 +30,17 @@ Then we apply the smoothed values to the transform's position.
 
 	void OnEnable ()
 	{
-        //EventManager.Instance.StartListening <ExposePlayerOnSwipe> (SetupTarget);
         //EventManager.Instance.StartListeningOnce<ChunkEnteredEvent>(MoveWithPlayer);
     }
 
 	void OnDisable ()
 	{
-	//	EventManager.Instance.StopListening <ExposePlayerOnSwipe> (SetupTarget);
         //    EventManager.Instance.StopListening<ChunkEnteredEvent>(MoveWithPlayer);
     }
+
+	void Start() {
+		target = GameObject.FindGameObjectWithTag ("Player").transform;
+	}
 
 	void LateUpdate ()
 	{
