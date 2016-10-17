@@ -2,7 +2,7 @@
 using System.Collections;
 
 
-namespace AI.FSM
+namespace AIns.FSM
 {
 	public class ExampleFSM : CoroutineMachine
 	{
