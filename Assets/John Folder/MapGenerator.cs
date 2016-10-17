@@ -9,11 +9,21 @@ public class MapGenerator : MonoBehaviour {
 	public GameObject player;
 
 	// Use this for initialization
-	void Start () {
-		SpawnObjects ();
+//	void Start () {
+//		SpawnObjects ();
+//	}
+
+	void OnEnable ()
+	{
+		EventManager.Instance.StartListening<InstantiateGame> (SpawnObjects);
 	}
 
-	private string[] ReadTextFile(){
+	void OnDisable ()
+	{
+		EventManager.Instance.StopListening<InstantiateGame> (SpawnObjects);
+	}
+
+	public string[] ReadTextFile(){
 		
 		TextAsset data = Resources.Load ("Level") as TextAsset;
 
@@ -23,8 +33,8 @@ public class MapGenerator : MonoBehaviour {
 
 	}
 
-	private void SpawnObjects(){
-		
+	private void SpawnObjects(GameEvent e){
+		Debug.Log("ibside");
 		for (int y = 0; y < ReadTextFile().Length; y++) {
 			
 			for (int x = 0; x < ReadTextFile()[y].Length; x++) {
