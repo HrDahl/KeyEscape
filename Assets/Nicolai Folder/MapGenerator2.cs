@@ -59,7 +59,42 @@ public class MapGenerator2 : MonoBehaviour {
 
 		ground = (GameObject) Instantiate(ground, new Vector3(xPos, 0, -zPos), Quaternion.identity);
 
-		ground.transform.localScale = new Vector3(rowCount * 0.1f, 1f, colCount * 0.1f);
+		Mesh mesh = new Mesh();
+		int vertexIndex = 0;
+		ground.GetComponent<MeshFilter> ().mesh = mesh;
+		mesh.name = "Procedural Grid";
+
+		Vector3[] vertices = new Vector3[(rowCount + 1) * (colCount + 1)];
+
+		Vector2[] uv = new Vector2[vertices.Length];
+
+		for (int y = 0; y < colCount + 1; y++) {
+			for (int x = 0; x < rowCount + 1; x++) {
+				vertices [vertexIndex] = new Vector3 ((x - rowCount/2), Random.Range(0f, 0.3f), y - colCount/2);
+				uv[vertexIndex] = new Vector2((float) (x - rowCount/2) / rowCount, (float) (y - colCount/2) / colCount);
+				vertexIndex++;
+			}
+		}
+
+		mesh.vertices = vertices;
+		mesh.uv = uv;
+
+		int[] triangles = new int[rowCount * colCount * 6];
+		for (int ti = 0, vi = 0, y = 0; y < colCount; y++, vi++) {
+			for (int x = 0; x < rowCount; x++, ti += 6, vi++) {
+				triangles [ti] = vi;
+				triangles [ti + 3] = triangles [ti + 2] = vi + 1;
+				triangles [ti + 4] = triangles [ti + 1] = vi + rowCount + 1;
+				triangles [ti + 5] = vi + rowCount + 2;
+				mesh.triangles = triangles;
+				mesh.RecalculateNormals();
+			}
+		}
+		ground.GetComponent<Renderer> ().material.mainTextureScale = new Vector2 (rowCount/5, colCount/5);
+		ground.GetComponent<MeshCollider> ().sharedMesh = mesh;
+
+
+		//ground.transform.localScale = new Vector3(rowCount * 0.1f, 1f, colCount * 0.1f);
 	}
 
 	private string[] ReadTextFile(){
@@ -71,4 +106,5 @@ public class MapGenerator2 : MonoBehaviour {
 		return  content;
 
 	}
+
 }

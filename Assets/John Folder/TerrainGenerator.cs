@@ -31,8 +31,8 @@ public class TerrainGenerator : MonoBehaviour {
 
 		for (int y = 0; y < mapHeight + 1; y++) {
 			for (int x = 0; x < mapWidth + 1; x++) {
-				vertices [vertexIndex] = new Vector3 (x, Random.Range(0f, 0.2f), y);
-				uv[vertexIndex] = new Vector2((float) x / mapWidth, (float) y / mapHeight);
+				vertices [vertexIndex] = new Vector3 ((x - mapWidth/2), Random.Range(0f, 0.2f), y - mapHeight/2);
+				uv[vertexIndex] = new Vector2((float) (x - mapWidth/2) / mapWidth, (float) (y - mapHeight/2) / mapHeight);
 				vertexIndex++;
 			}
 		}
