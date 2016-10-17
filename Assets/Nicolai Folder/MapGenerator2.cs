@@ -57,11 +57,11 @@ public class MapGenerator2 : MonoBehaviour {
 		float xPos = (rowCount / 2f) - 0.5f;
 		float zPos = (colCount / 2f) - 0.5f;
 
+        int vertexIndex = 0;
+
 		ground = (GameObject) Instantiate(ground, new Vector3(xPos, 0, -zPos), Quaternion.identity);
 
 		Mesh mesh = new Mesh();
-		int vertexIndex = 0;
-		ground.GetComponent<MeshFilter> ().mesh = mesh;
 		mesh.name = "Procedural Grid";
 
 		Vector3[] vertices = new Vector3[(rowCount + 1) * (colCount + 1)];
@@ -89,12 +89,11 @@ public class MapGenerator2 : MonoBehaviour {
 				mesh.triangles = triangles;
 				mesh.RecalculateNormals();
 			}
-		}
+        }
+
+        ground.GetComponent<MeshFilter> ().mesh = mesh;
 		ground.GetComponent<Renderer> ().material.mainTextureScale = new Vector2 (rowCount/5, colCount/5);
-		ground.GetComponent<MeshCollider> ().sharedMesh = mesh;
-
-
-		//ground.transform.localScale = new Vector3(rowCount * 0.1f, 1f, colCount * 0.1f);
+        ground.GetComponent<MeshCollider> ().sharedMesh = mesh;
 	}
 
 	private string[] ReadTextFile(){

@@ -21,43 +21,29 @@ public class LSystem : MonoBehaviour {
 	List<Vector3> vertices = new List<Vector3>();
 	List<int> indices = new List<int>();
 	int count = 0;
-
-    GameObject treeSide;
     Mesh mesh;
 
     List<Vector3> normals = new List<Vector3>();
 
-	void Start(){
-        treeSide = (GameObject)GameObject.FindGameObjectWithTag("Tree");
+	void Awake(){
+        str = new List<LSElement>();
+        ExpandRules();
 
-        if (treeSide == null) {
-            str = new List<LSElement>();
-            ExpandRules();
+        mesh = Interpret();
+        mesh.RecalculateNormals();
+        mesh.uv = new Vector2[mesh.vertexCount];
 
-            mesh = Interpret();
-            mesh.RecalculateNormals();
-            mesh.uv = new Vector2[mesh.vertexCount];
-            mesh.RecalculateBounds();
-            mesh.Optimize();
+        mesh.RecalculateBounds();
+        mesh.Optimize();
 
-            GetComponent<MeshFilter>().mesh = mesh;
-        } else {
-            GetComponent<MeshFilter>().mesh = mesh;
-        }
+        GetComponent<MeshFilter>().mesh = mesh;
+
+        StartCoroutine(waitDisable());
 	}
 
-    void Update() {
-       /* if (count % 10 == 0) {
-            ExpandRules();
-
-            mesh = Interpret();
-            mesh.RecalculateNormals();
-            mesh.uv = new Vector2[mesh.vertexCount];
-
-            GetComponent<MeshFilter>().mesh = mesh;
-        }
-
-        count++; */
+    IEnumerator waitDisable() {
+        yield return new WaitForSeconds(0.5f);
+        gameObject.SetActive(false);
     }
 
 	void ExpandRules() {
@@ -110,9 +96,7 @@ public class LSystem : MonoBehaviour {
 
                 Vector3 randomPoint1 = (1 - Mathf.Sqrt(Random.Range(0.0f, 1.0f))) * p0 + (Mathf.Sqrt(Random.Range(0.0f, 1.0f)) * (1 - Random.Range(0.0f, 1.0f))) * p1;
 
-                Debug.Log("Point: " + p3);
                 Vector3 normal = p1 + (p2 - p1) + Random.Range(0.0f, 1.0f) * (p3 - p1);
-                Debug.Log(perp);
                 normals.Add(perp);
             }
 
@@ -122,8 +106,6 @@ public class LSystem : MonoBehaviour {
 
 
 		}
-        //Branch done
-        Debug.Log("New Branch:");
 	}
 
 	public Mesh Interpret(){
@@ -132,27 +114,22 @@ public class LSystem : MonoBehaviour {
 		foreach (var elem in str){
 			switch (elem.symbol){
 			case LSElement.LSSymbol.DRAW:
-                    //Debug.Log("DRAW : " + turtle.Peek().M);
                     AddCone(turtle.Peek().M, elem.data[0], turtle.GetWidth(), turtle.GetWidth() * elem.data[1]);
 				turtle.Move(elem.data[0]);
 				break;
 			case LSElement.LSSymbol.TURN:
-                    //Debug.Log("TURN : " + turtle.Peek().M);
                     turtle.Turn(elem.data[0]);
 				break;
 			case LSElement.LSSymbol.ROLL:
 				turtle.Roll(elem.data[0]);
 				break;
                 case LSElement.LSSymbol.LEFT_BRACKET:
-                    //Debug.Log("PUSH (NEW BRANCH) : " + turtle.Peek().M);
 				turtle.Push();
 				break;
 			case LSElement.LSSymbol.RIGHT_BRACKET:
-                    //Debug.Log("POP (GO BACK BRANCH) : " + turtle.Peek().M);
                     turtle.Pop();
 				break;
 			case LSElement.LSSymbol.WIDTH:
-                    //Debug.Log("WIDTH : " + turtle.Peek().M);
                     turtle.SetWidth(elem.data[0]);
 				break;
             }
