@@ -13,7 +13,7 @@ public class MapGenerator : MonoBehaviour {
 		SpawnObjects ();
 	}
 
-	private string[] ReadTextFile(){
+	public string[] ReadTextFile(){
 		
 		TextAsset data = Resources.Load ("Level") as TextAsset;
 
