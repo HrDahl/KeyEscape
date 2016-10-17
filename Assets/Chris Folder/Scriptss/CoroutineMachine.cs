@@ -3,7 +3,7 @@ using System.Collections;
 using System;
 
 
-namespace AI.FSM
+namespace AIns.FSM
 {
 	public delegate IEnumerator StateRoutine ();
 	public delegate IEnumerator TransitionRoutine (StateRoutine from, StateRoutine to);
