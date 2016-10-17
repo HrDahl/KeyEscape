@@ -27,14 +27,19 @@ public class TerrainGenerator : MonoBehaviour {
 
 		vertices = new Vector3[(mapWidth + 1) * (mapHeight + 1)];
 
+		Vector2[] uv = new Vector2[vertices.Length];
+
 		for (int y = 0; y < mapHeight + 1; y++) {
 			for (int x = 0; x < mapWidth + 1; x++) {
 				vertices [vertexIndex] = new Vector3 (x, Random.Range(0f, 0.2f), y);
+				uv[vertexIndex] = new Vector2((float) x / mapWidth, (float) y / mapHeight);
 				vertexIndex++;
 			}
 		}
 
 		mesh.vertices = vertices;
+		mesh.uv = uv;
+
 		int[] triangles = new int[mapWidth * mapHeight * 6];
 		for (int ti = 0, vi = 0, y = 0; y < mapHeight; y++, vi++) {
 			for (int x = 0; x < mapWidth; x++, ti += 6, vi++) {
@@ -43,6 +48,7 @@ public class TerrainGenerator : MonoBehaviour {
 				triangles [ti + 4] = triangles [ti + 1] = vi + mapWidth + 1;
 				triangles [ti + 5] = vi + mapWidth + 2;
 				mesh.triangles = triangles;
+				mesh.RecalculateNormals();
 			}
 		}
 
