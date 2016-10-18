@@ -4,9 +4,8 @@ using System.Collections;
 public class AIvision : MonoBehaviour
 {
 
-	public float fieldOfView = 30.0f;
-	public Vector3 lastSighting; 
-	public float range = 10f;
+	public float fieldOfView = 120.0f;
+	public float range = 12f;
 	Transform parent; 
 	public bool inSight = false;
 	public bool chasing = false;
@@ -29,10 +28,9 @@ public class AIvision : MonoBehaviour
 			RaycastHit hit;
 			Vector3 direction = player.transform.position - parent.transform.position;
 			if (Physics.Raycast (parent.transform.position, direction.normalized, out hit, range)) {
-				Debug.Log (hit);
+				Debug.Log (hit.collider.gameObject.name);
 				if (hit.collider.gameObject.tag == "Player") {
 					chasing = true;
-					lastSighting = hit.transform.position;
 					ai.playerSpotted = true;
 				} else {
 					chasing = false;
@@ -52,12 +50,11 @@ public class AIvision : MonoBehaviour
 				RaycastHit hit;
 
 				if (Physics.Raycast (parent.transform.position , direction.normalized, out hit, range)) {
-					Debug.Log (hit);
+					Debug.Log (hit.collider.gameObject.name);
 					if (hit.collider.gameObject.tag == "Player") {
 						inSight = true;
 						chasing = true;
 						Debug.Log ("Sighted!");
-						lastSighting = hit.transform.position;
 						ai.playerSpotted = true;;
 					} else {
 						inSight = false;
