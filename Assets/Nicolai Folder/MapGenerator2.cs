@@ -112,6 +112,8 @@ public class MapGenerator2 : MonoBehaviour {
 
         Vector3[] vertices = new Vector3[(rowCount + 1) * (colCount + 1)];
 
+        Vector2[] uv = new Vector2[vertices.Length];
+
 
 		for (int y = 0; y < colCount + 1; y++) {
 			for (int x = 0; x < rowCount + 1; x++) {
@@ -121,8 +123,6 @@ public class MapGenerator2 : MonoBehaviour {
 				vertexIndex++;
 			}
 		}
-
-        Vector2[] uv = new Vector2[vertices.Length];
 
         mesh.vertices = vertices;
         mesh.uv = uv;
@@ -146,7 +146,7 @@ public class MapGenerator2 : MonoBehaviour {
 
     private string[] ReadTextFile(){
 
-        TextAsset data = Resources.Load ("Level") as TextAsset;
+        TextAsset data = Resources.Load ("Level2") as TextAsset;
 
         string[] content = data.text.Split('\n');
 
