@@ -9,6 +9,11 @@ public class MapGenerator2 : MonoBehaviour {
 	public GameObject player;
 	public GameObject ground;
     public GameObject parentTrees;
+	public GameObject horizontalWall;
+	public GameObject verticalWall;
+	public GameObject box;
+	public GameObject barrel;
+	public GameObject bridge;
     public GameObject parentEnemies;
 
 	void OnEnable ()
@@ -33,14 +38,34 @@ public class MapGenerator2 : MonoBehaviour {
 				
 				switch (lvlFile[y][x].ToString()){
 
-                    case "T":
-                        GameObject child = (GameObject)Instantiate(tree, new Vector3(x, 0f, -y), tree.transform.rotation);
+                case "T":
+					GameObject child = (GameObject)Instantiate(tree, new Vector3(x + Random.Range (-0.2f, 0.2f), 0f, -y + Random.Range (-0.2f, 0.2f)), tree.transform.rotation);
                         child.transform.parent = parentTrees.transform;
 					    break;
 
 				case "E":
                         GameObject childEnemy = (GameObject) Instantiate(enemy, new Vector3(x, 0.5f, -y), Quaternion.identity);
                         childEnemy.transform.parent = parentEnemies.transform;
+					break;
+
+				case "H":
+					Instantiate(horizontalWall, new Vector3(x, 1f, -y  - 0.5f), horizontalWall.transform.rotation);
+					break;
+
+				case "V":
+					Instantiate(verticalWall, new Vector3(x - 0.5f, 1f, -y), verticalWall.transform.rotation);
+					break;
+
+				case "B":
+					Instantiate(box, new Vector3(x , 0.5f, -y), Quaternion.identity);
+					break;
+
+				case "C":
+					Instantiate(barrel, new Vector3(x + Random.Range (-0.2f, 0.2f), 0.5f, -y + Random.Range (-0.2f, 0.2f)), Quaternion.identity);
+					break;
+
+				case "G":
+					Instantiate(bridge, new Vector3(x, 0.5f, -y - 0.5f), Quaternion.identity);
 					break;
 
 				case "P":
@@ -74,7 +99,8 @@ public class MapGenerator2 : MonoBehaviour {
 
 		for (int y = 0; y < colCount + 1; y++) {
 			for (int x = 0; x < rowCount + 1; x++) {
-				vertices [vertexIndex] = new Vector3 ((x - rowCount/2), Random.Range(0f, 0.3f), y - colCount/2);
+//				vertices [vertexIndex] = new Vector3 ((x - rowCount / 2), Random.Range (0f, 0.3f), y - colCount / 2);
+				vertices [vertexIndex] = new Vector3 ((x - rowCount / 2), Gauss(x), y - colCount / 2);
 				uv[vertexIndex] = new Vector2((float) (x - rowCount/2) / rowCount, (float) (y - colCount/2) / colCount);
 				vertexIndex++;
 			}
@@ -108,6 +134,21 @@ public class MapGenerator2 : MonoBehaviour {
 
 		return  content;
 
+	}
+
+	private float Gauss(int x){
+		float g;
+		if(x < 20){
+			g = 10f*Mathf.Exp((-1)*(Mathf.Pow((x - 0f), 2f)/(Mathf.Pow(2f * 2f, 2f))));
+		}
+		else if (x > 80) {
+			g = 10f * Mathf.Exp ((-1) * (Mathf.Pow ((x - 100f), 2f) / (Mathf.Pow (2f * 2f, 2f))));
+		} 
+		else {
+			g = Random.Range (0f, 0.3f);
+		}
+		Debug.Log (g);
+		return g; 
 	}
 
 }
