@@ -13,8 +13,6 @@ public class Rule {
 	public float e;
 	public float smin;
 
-    int testing = 0;
-
 	public Rule (float alpha1, float alpha2, float phi1, float phi2, float r1, float r2, float q, float e, float smin)
 	{
 		this.alpha1 = alpha1;
@@ -46,11 +44,6 @@ public class Rule {
 				outList.Add(new LSElement(LSElement.LSSymbol.ROLL, phi2));
 				outList.Add(new LSElement(LSElement.LSSymbol.A, length * r2, width * Mathf.Pow(1.0f-q,e)));
 				outList.Add(new LSElement(LSElement.LSSymbol.RIGHT_BRACKET));
-            }
-            // Make leaf on the branches with a width of.
-            if (width < 0.01f) {
-                testing++;
-                Debug.Log("Branch no. : " + testing + " Length of branch: " + length + " Width of branch : " + width);
             }
 		} else {
 			outList.Add(elem);
