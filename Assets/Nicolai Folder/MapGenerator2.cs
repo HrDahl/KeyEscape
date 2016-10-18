@@ -100,7 +100,7 @@ public class MapGenerator2 : MonoBehaviour {
 		for (int y = 0; y < colCount + 1; y++) {
 			for (int x = 0; x < rowCount + 1; x++) {
 //				vertices [vertexIndex] = new Vector3 ((x - rowCount / 2), Random.Range (0f, 0.3f), y - colCount / 2);
-				vertices [vertexIndex] = new Vector3 ((x - rowCount / 2), Gauss(x), y - colCount / 2);
+				vertices [vertexIndex] = new Vector3 ((x - rowCount / 2), Gauss(x, y), y - colCount / 2);
 				uv[vertexIndex] = new Vector2((float) (x - rowCount/2) / rowCount, (float) (y - colCount/2) / colCount);
 				vertexIndex++;
 			}
@@ -136,7 +136,7 @@ public class MapGenerator2 : MonoBehaviour {
 
 	}
 
-	private float Gauss(int x){
+	private float Gauss(int x, int y){
 		float g;
 		if(x < 20){
 			g = 10f*Mathf.Exp((-1)*(Mathf.Pow((x - 0f), 2f)/(Mathf.Pow(2f * 2f, 2f))));
@@ -144,6 +144,12 @@ public class MapGenerator2 : MonoBehaviour {
 		else if (x > 80) {
 			g = 10f * Mathf.Exp ((-1) * (Mathf.Pow ((x - 100f), 2f) / (Mathf.Pow (2f * 2f, 2f))));
 		} 
+//		if(y < 10){
+//			g = 10f*Mathf.Exp((-1)*(Mathf.Pow((y - 0f), 2f)/(Mathf.Pow(2f * 2f, 2f))));
+//		}
+//		if (x > 90) {
+//			g = 10f * Mathf.Exp ((-1) * (Mathf.Pow ((y - 40f), 2f) / (Mathf.Pow (2f * 2f, 2f))));
+//		} 
 		else {
 			g = Random.Range (0f, 0.3f);
 		}
