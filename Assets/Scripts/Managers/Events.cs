@@ -26,4 +26,14 @@ public class PlayerSpottedEvent : GameEvent {
 	}
 
 }
+
+public class AlarmEvent : GameEvent {
+
+	public Vector3 AlarmAtPosition { get; private set; }
+
+	public AlarmEvent(Vector3 AlarmAtPosition) {
+		this.AlarmAtPosition = AlarmAtPosition;
+	}
+
+}
     
