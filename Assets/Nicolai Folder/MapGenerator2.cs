@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class MapGenerator2 : MonoBehaviour {
 
-	public GameObject tree;
+	public GameObject[] treeList;
 	public GameObject enemy;
 	public GameObject player;
 	public GameObject ground;
@@ -26,27 +26,43 @@ public class MapGenerator2 : MonoBehaviour {
 		EventManager.Instance.StopListening<InstantiateGame> (SpawnObjects);
 	}
 
-	private void SpawnObjects(GameEvent e){
+    void Awake() {
+        treeList = GameObject.FindGameObjectsWithTag("Tree");
+    }
 
-		string[] lvlFile = ReadTextFile ();
+    public void SpawnObjects(GameEvent e){
 
-		instantiateGround (lvlFile);
+        string[] lvlFile = ReadTextFile ();
 
-		for (int y = 0; y < lvlFile.Length; y++) {
-			
-			for (int x = 0; x < lvlFile[y].Length; x++) {
-				
-				switch (lvlFile[y][x].ToString()){
+        instantiateGround (lvlFile);
 
-                case "T":
-					GameObject child = (GameObject)Instantiate(tree, new Vector3(x + Random.Range (-0.2f, 0.2f), 0f, -y + Random.Range (-0.2f, 0.2f)), tree.transform.rotation);
-                        child.transform.parent = parentTrees.transform;
-					    break;
+        for (int y = 0; y < lvlFile.Length; y++) {
 
-				case "E":
+            for (int x = 0; x < lvlFile[y].Length; x++) {
+
+                switch (lvlFile[y][x].ToString()){
+
+
+
+                    case "T":
+
+                        int index = Random.Range(0, treeList.Length);
+                        GameObject chosenTree = treeList[index];
+
+                        GameObject tree = (GameObject)Instantiate(chosenTree);
+                        Destroy(tree.GetComponent<LSystem>());
+
+                        tree.transform.position = new Vector3(x, 0f, -y);
+                        tree.transform.rotation = Quaternion.Euler(new Vector3(tree.transform.rotation.x - 90f, tree.transform.rotation.y, tree.transform.rotation.z));
+                        tree.transform.parent = parentTrees.transform;
+
+                        break;
+
+                    case "E":
                         GameObject childEnemy = (GameObject) Instantiate(enemy, new Vector3(x, 0.5f, -y), Quaternion.identity);
                         childEnemy.transform.parent = parentEnemies.transform;
-					break;
+                        break;
+
 
 				case "H":
 					Instantiate(horizontalWall, new Vector3(x, 1f, -y  - 0.5f), horizontalWall.transform.rotation);
@@ -72,30 +88,30 @@ public class MapGenerator2 : MonoBehaviour {
 					Instantiate(player, new Vector3(x, 0.5f, -y), Quaternion.identity);
 					break;
 
-				default:
-					break;
-				}
-			}
-		}
-	}
 
-	public void instantiateGround(string[] lvlFile) {
-		int colCount = lvlFile.Length;
-		int rowCount = lvlFile[colCount-1].Length;
+                    default:
+                        break;
+                }
+            }
+        }
+    }
 
-		float xPos = (rowCount / 2f) - 0.5f;
-		float zPos = (colCount / 2f) - 0.5f;
+    public void instantiateGround(string[] lvlFile) {
+        int colCount = lvlFile.Length;
+        int rowCount = lvlFile[colCount-1].Length;
+
+        float xPos = (rowCount / 2f) - 0.5f;
+        float zPos = (colCount / 2f) - 0.5f;
 
         int vertexIndex = 0;
 
-		ground = (GameObject) Instantiate(ground, new Vector3(xPos, 0, -zPos), Quaternion.identity);
+        ground = (GameObject) Instantiate(ground, new Vector3(xPos, 0, -zPos), Quaternion.identity);
 
-		Mesh mesh = new Mesh();
-		mesh.name = "Procedural Grid";
+        Mesh mesh = new Mesh();
+        mesh.name = "Procedural Grid";
 
-		Vector3[] vertices = new Vector3[(rowCount + 1) * (colCount + 1)];
+        Vector3[] vertices = new Vector3[(rowCount + 1) * (colCount + 1)];
 
-		Vector2[] uv = new Vector2[vertices.Length];
 
 		for (int y = 0; y < colCount + 1; y++) {
 			for (int x = 0; x < rowCount + 1; x++) {
@@ -106,35 +122,37 @@ public class MapGenerator2 : MonoBehaviour {
 			}
 		}
 
-		mesh.vertices = vertices;
-		mesh.uv = uv;
+        Vector2[] uv = new Vector2[vertices.Length];
 
-		int[] triangles = new int[rowCount * colCount * 6];
-		for (int ti = 0, vi = 0, y = 0; y < colCount; y++, vi++) {
-			for (int x = 0; x < rowCount; x++, ti += 6, vi++) {
-				triangles [ti] = vi;
-				triangles [ti + 3] = triangles [ti + 2] = vi + 1;
-				triangles [ti + 4] = triangles [ti + 1] = vi + rowCount + 1;
-				triangles [ti + 5] = vi + rowCount + 2;
-				mesh.triangles = triangles;
-				mesh.RecalculateNormals();
-			}
+        mesh.vertices = vertices;
+        mesh.uv = uv;
+
+        int[] triangles = new int[rowCount * colCount * 6];
+        for (int ti = 0, vi = 0, y = 0; y < colCount; y++, vi++) {
+            for (int x = 0; x < rowCount; x++, ti += 6, vi++) {
+                triangles [ti] = vi;
+                triangles [ti + 3] = triangles [ti + 2] = vi + 1;
+                triangles [ti + 4] = triangles [ti + 1] = vi + rowCount + 1;
+                triangles [ti + 5] = vi + rowCount + 2;
+                mesh.triangles = triangles;
+                mesh.RecalculateNormals();
+            }
         }
 
         ground.GetComponent<MeshFilter> ().mesh = mesh;
-		ground.GetComponent<Renderer> ().material.mainTextureScale = new Vector2 (rowCount/5, colCount/5);
+        ground.GetComponent<Renderer> ().material.mainTextureScale = new Vector2 (rowCount/5, colCount/5);
         ground.GetComponent<MeshCollider> ().sharedMesh = mesh;
-	}
+    }
 
-	private string[] ReadTextFile(){
+    private string[] ReadTextFile(){
 
-		TextAsset data = Resources.Load ("Level2") as TextAsset;
+        TextAsset data = Resources.Load ("Level") as TextAsset;
 
-		string[] content = data.text.Split('\n');
+        string[] content = data.text.Split('\n');
 
-		return  content;
+        return  content;
 
-	}
+    }
 
 	private float Gauss(int x, int y){
 		float g;

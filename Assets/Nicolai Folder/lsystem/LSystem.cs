@@ -23,27 +23,33 @@ public class LSystem : MonoBehaviour {
 	int count = 0;
     Mesh mesh;
 
-    List<Vector3> normals = new List<Vector3>();
+    public float multiplierLeafs;
 
-	void Awake(){
-        str = new List<LSElement>();
-        ExpandRules();
+    public bool calculateMesh = false;
 
-        mesh = Interpret();
-        mesh.RecalculateNormals();
-        mesh.uv = new Vector2[mesh.vertexCount];
+    void Awake(){
+        if (calculateMesh) {
+            calculateMesh = false;
+            str = new List<LSElement>();
+            ExpandRules();
 
-        mesh.RecalculateBounds();
-        mesh.Optimize();
+            mesh = Interpret();
+            mesh.RecalculateNormals();
+            mesh.uv = new Vector2[mesh.vertexCount];
 
-        GetComponent<MeshFilter>().mesh = mesh;
+            mesh.RecalculateBounds();
 
-        StartCoroutine(waitDisable());
+            GetComponent<MeshFilter>().mesh = mesh; 
+
+            transform.position = new Vector3(0f, -20f, 0f);
+            mesh.name = gameObject.name;
+            StartCoroutine(waitDisable());
+        }
 	}
 
     IEnumerator waitDisable() {
         yield return new WaitForSeconds(0.5f);
-        //Destroy(gameObject);
+        Destroy(gameObject);
     }
 
 	void ExpandRules() {
@@ -87,24 +93,9 @@ public class LSystem : MonoBehaviour {
 			vertices.Add(p2);
 			vertices.Add(p3);
 
-            if (w0 < 0.01f) {
-                Vector3 side1 = p2 - p0;
-                Vector3 side2 = p1 - p0;
-                Vector3 perp = Vector3.Cross(side1, side2);
-                var perpLength = perp.magnitude;
-                perp /= perpLength;
+            if (w0 < 0.04f) {
 
-               // Vector3 randomPoint1 = (1 - Mathf.Sqrt(Random.Range(0.0f, 1.0f))) * p0 + (Mathf.Sqrt(Random.Range(0.0f, 1.0f)) * (1 - Random.Range(0.0f, 1.0f))) * p1;
-
-                Vector3 randomPoint = p0 + Mathf.Sqrt(Random.Range(0.0f, 1.0f)) * (p1 - p0) + Mathf.Sqrt(Random.Range(0.0f, 1.0f)) * (p2 - p0);
-
-                Debug.Log("p0 : " + p0);
-                Debug.Log("p1 : " + p1);
-                Debug.Log("p2 : " + p2);
-                Debug.Log("p3 : " + p3);
-                Debug.Log("Random Point : " + randomPoint);
-
-                interpolationLeaf(p0,p1);
+               interpolationLeaf(p0,p1,p2,w0);
 
             }
 
@@ -116,22 +107,31 @@ public class LSystem : MonoBehaviour {
 		}
 	}
 
-    private void interpolationLeaf(Vector3 p0, Vector3 p1) {
+    private void interpolationLeaf(Vector3 p0, Vector3 p1, Vector3 p2, float width) {
         List<Vector3> lerpVals = new List<Vector3>();
+        Vector3 normal = Vector3.Cross(p1 - p0, p1 - p2).normalized;
+        float ratioLeafs = 0;
 
-        for (float i = 0; i <= 1; i+=0.1f) {
+        if (width > 0.03f) {
+            ratioLeafs = 1f * multiplierLeafs;
+        } else if (width > 0.02f) {
+            ratioLeafs = 0.7f * multiplierLeafs;
+        } else {
+            ratioLeafs = 0.4f * multiplierLeafs;
+        }
+
+        for (float i = 0; i <= 0.2; i+=ratioLeafs) {
             lerpVals.Add(Vector3.Lerp(p0,p1,i));
-            Debug.Log("Lerp Value: " + Vector3.Lerp(p0, p1, i));
         }
 
         foreach (var lerpVal in lerpVals) {
-            Instantiate(mappleLeaf, lerpVal, Quaternion.identity, gameObject.transform);
+            GameObject leaf = (GameObject)Instantiate(mappleLeaf, new Vector3(lerpVal.x, lerpVal.y, lerpVal.z), Quaternion.identity, gameObject.transform);
+            leaf.transform.up = normal;
         }
     }
 
 	public Mesh Interpret(){
 		Turtle turtle = new Turtle(w0);
-        Debug.Log(str.Count);
 		foreach (var elem in str){
 			switch (elem.symbol){
 			case LSElement.LSSymbol.DRAW:
