@@ -8,6 +8,8 @@ public class MapGenerator2 : MonoBehaviour {
 	public GameObject enemy;
 	public GameObject player;
 	public GameObject ground;
+    public GameObject parentTrees;
+    public GameObject parentEnemies;
 
 	void OnEnable ()
 	{
@@ -31,12 +33,14 @@ public class MapGenerator2 : MonoBehaviour {
 				
 				switch (lvlFile[y][x].ToString()){
 
-				case "T":
-					Instantiate(tree, new Vector3(x, 0f, -y), tree.transform.rotation);
-					break;
+                    case "T":
+                        GameObject child = (GameObject)Instantiate(tree, new Vector3(x, 0f, -y), tree.transform.rotation);
+                        child.transform.parent = parentTrees.transform;
+					    break;
 
 				case "E":
-					Instantiate(enemy, new Vector3(x, 0.5f, -y), Quaternion.identity);
+                        GameObject childEnemy = (GameObject) Instantiate(enemy, new Vector3(x, 0.5f, -y), Quaternion.identity);
+                        childEnemy.transform.parent = parentEnemies.transform;
 					break;
 
 				case "P":

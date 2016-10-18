@@ -43,7 +43,7 @@ public class LSystem : MonoBehaviour {
 
     IEnumerator waitDisable() {
         yield return new WaitForSeconds(0.5f);
-        gameObject.SetActive(false);
+        //Destroy(gameObject);
     }
 
 	void ExpandRules() {
@@ -94,10 +94,18 @@ public class LSystem : MonoBehaviour {
                 var perpLength = perp.magnitude;
                 perp /= perpLength;
 
-                Vector3 randomPoint1 = (1 - Mathf.Sqrt(Random.Range(0.0f, 1.0f))) * p0 + (Mathf.Sqrt(Random.Range(0.0f, 1.0f)) * (1 - Random.Range(0.0f, 1.0f))) * p1;
+               // Vector3 randomPoint1 = (1 - Mathf.Sqrt(Random.Range(0.0f, 1.0f))) * p0 + (Mathf.Sqrt(Random.Range(0.0f, 1.0f)) * (1 - Random.Range(0.0f, 1.0f))) * p1;
 
-                Vector3 normal = p1 + (p2 - p1) + Random.Range(0.0f, 1.0f) * (p3 - p1);
-                normals.Add(perp);
+                Vector3 randomPoint = p0 + Mathf.Sqrt(Random.Range(0.0f, 1.0f)) * (p1 - p0) + Mathf.Sqrt(Random.Range(0.0f, 1.0f)) * (p2 - p0);
+
+                Debug.Log("p0 : " + p0);
+                Debug.Log("p1 : " + p1);
+                Debug.Log("p2 : " + p2);
+                Debug.Log("p3 : " + p3);
+                Debug.Log("Random Point : " + randomPoint);
+
+                interpolationLeaf(p0,p1);
+
             }
 
 			for (int j = 0; j < 6; j++){
@@ -107,6 +115,19 @@ public class LSystem : MonoBehaviour {
 
 		}
 	}
+
+    private void interpolationLeaf(Vector3 p0, Vector3 p1) {
+        List<Vector3> lerpVals = new List<Vector3>();
+
+        for (float i = 0; i <= 1; i+=0.1f) {
+            lerpVals.Add(Vector3.Lerp(p0,p1,i));
+            Debug.Log("Lerp Value: " + Vector3.Lerp(p0, p1, i));
+        }
+
+        foreach (var lerpVal in lerpVals) {
+            Instantiate(mappleLeaf, lerpVal, Quaternion.identity, gameObject.transform);
+        }
+    }
 
 	public Mesh Interpret(){
 		Turtle turtle = new Turtle(w0);
