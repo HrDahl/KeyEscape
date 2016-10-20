@@ -37,10 +37,10 @@ public class AlarmEvent : GameEvent {
 
 }
  
-public class PickUpPrefab : GameEvent {
+public class PickUpKey : GameEvent {
     public GameObject key;
 
-    public PickUpPrefab (GameObject key) {
+    public PickUpKey (GameObject key) {
         this.key = key;
     }
 }
