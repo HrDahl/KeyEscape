@@ -37,6 +37,13 @@ public class AlarmEvent : GameEvent {
 
 }
  
+public class DeadEvent : GameEvent {
+
+	public DeadEvent() {
+	}
+
+}
+
 public class PickUpKey : GameEvent {
     public GameObject key;
 

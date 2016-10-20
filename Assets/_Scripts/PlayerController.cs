@@ -8,7 +8,11 @@ public class PlayerController : MonoBehaviour {
 	public float currentHealth; 
     public List<GameObject> keysObtained;
 
+	AudioSource aud;
+
 	void OnEnable() {
+		aud = GetComponent<AudioSource> ();
+		currentHealth = maxHealth;
 		EventManager.Instance.StartListening<TakeDamageEvent>(TakeDamage);
         EventManager.Instance.StartListening<PickUpKey>(KeyPickUp);
 	}
@@ -28,6 +32,8 @@ public class PlayerController : MonoBehaviour {
 
 		if (currentHealth <= 0) {
 			Debug.Log ("Ded");
+			EventManager.Instance.TriggerEvent (new DeadEvent());
+			aud.Play ();
 		}
 	}
 
