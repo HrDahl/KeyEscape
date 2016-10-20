@@ -3,11 +3,11 @@ using UnityEngine;
 
 public class TakeDamageEvent : GameEvent
 {
-    public string message { get; private set; }
+    public float damage { get; private set; }
 
-    public TakeDamageEvent(string message)
+    public TakeDamageEvent(float damage)
     {
-        this.message = message;
+        this.damage = damage;
     }
 }
 
@@ -36,4 +36,18 @@ public class AlarmEvent : GameEvent {
 	}
 
 }
-    
+ 
+public class DeadEvent : GameEvent {
+
+	public DeadEvent() {
+	}
+
+}
+
+public class PickUpKey : GameEvent {
+    public GameObject key;
+
+    public PickUpKey (GameObject key) {
+        this.key = key;
+    }
+}

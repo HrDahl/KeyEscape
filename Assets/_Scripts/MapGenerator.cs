@@ -8,10 +8,11 @@ public class MapGenerator : MonoBehaviour {
     public GameObject[] obstacleList;
     public GameObject[] containerList;
     public GameObject[] environmentList;
+    public GameObject[] keyList;
+    public GameObject[] gateList;
 
     public GameObject enemy;
     public GameObject player;
-    public GameObject pickup;
 
     public float steepFactor = 1f;
     int colCount = 0;
@@ -93,15 +94,51 @@ public class MapGenerator : MonoBehaviour {
                         GameObject cWall = (GameObject)Instantiate(obstacleList[2], new Vector3(x - 0.1f, 1f, -y - 0.5f), Quaternion.identity);
                         cWall.transform.parent = containerList[2].transform;
                         break;
-
-                    case "O":
-                        Instantiate(pickup, new Vector3(x - 0.1f, 1f, -y - 0.5f), Quaternion.identity);
-                        break;
-
+                    
                     case "W":
                         GameObject watchTower = (GameObject)Instantiate(environmentList[0], new Vector3(x, 3.7f, -y), Quaternion.identity);
                         watchTower.transform.parent = containerList[3].transform;
                         break;
+
+                    case "1":
+                        GameObject greenKey = (GameObject)Instantiate(keyList[0], new Vector3(x, 1f, -y), Quaternion.identity);
+                        greenKey.transform.parent = containerList[4].transform;
+                        break;                       
+
+                    case "2":
+                        GameObject blueKey = (GameObject)Instantiate(keyList[1], new Vector3(x, 1f, -y), Quaternion.identity);
+                        blueKey.transform.parent = containerList[4].transform;
+                        break;       
+
+                    case "3":
+                        GameObject redKey = (GameObject)Instantiate(keyList[2], new Vector3(x, 1f, -y), Quaternion.identity);
+                        redKey.transform.parent = containerList[4].transform;
+                        break;    
+
+                    case "4":
+                        GameObject rainbowKey = (GameObject)Instantiate(keyList[3], new Vector3(x, 1f, -y), Quaternion.identity);
+                        rainbowKey.transform.parent = containerList[4].transform;
+                        break;       
+
+                    case "9":
+                        GameObject greenGate = (GameObject)Instantiate(gateList[0], new Vector3(x + 0.4f, 1f, -y - 0.5f), Quaternion.identity);
+                        greenGate.transform.parent = containerList[5].transform;
+                        break;                           
+
+                    case "8":
+                        GameObject blueGate = (GameObject)Instantiate(gateList[1], new Vector3(x + 0.4f, 1f, -y - 0.5f), Quaternion.identity);
+                        blueGate.transform.parent = containerList[5].transform;
+                        break;  
+                    
+                    case "7":
+                        GameObject redGate = (GameObject)Instantiate(gateList[2], new Vector3(x + 0.4f, 1f, -y - 0.5f), Quaternion.identity);
+                        redGate.transform.parent = containerList[5].transform;
+                        break;  
+                    
+                    case "6":
+                        GameObject rainbowGate = (GameObject)Instantiate(gateList[3], new Vector3(x + 0.4f, 1f, -y - 0.5f), Quaternion.identity);
+                        rainbowGate.transform.parent = containerList[5].transform;
+                        break;  
 
                     default:
                         break;
@@ -160,7 +197,7 @@ public class MapGenerator : MonoBehaviour {
 
     private string[] ReadTextFile() {
 
-        TextAsset data = Resources.Load("Full_Level") as TextAsset;
+        TextAsset data = Resources.Load("Test_Level") as TextAsset;
 
         string[] content = data.text.Split('\n');
 
