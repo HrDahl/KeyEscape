@@ -36,4 +36,11 @@ public class AlarmEvent : GameEvent {
 	}
 
 }
+
+public class DeadEvent : GameEvent {
+
+	public DeadEvent() {
+	}
+
+}
     
