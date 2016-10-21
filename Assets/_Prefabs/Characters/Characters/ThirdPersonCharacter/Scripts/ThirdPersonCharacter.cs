@@ -202,16 +202,16 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		void CheckGroundStatus()
 		{
 			RaycastHit hitInfo;
-			Debug.Log (m_IsGrounded);
+		//	Debug.Log (m_IsGrounded);
 			float rad = 0.25f;
 #if UNITY_EDITOR
 			// helper to visualise the ground check ray in the scene view
 			//Debug.DrawLine(transform.position + (Vector3.up * 0.1f), transform.position + (Vector3.up * 0.1f) + (Vector3.down * m_GroundCheckDistance));
-			Debug.DrawRay(transform.position + (Vector3.up * 0.3f) + (Vector3.forward * rad) + (Vector3.right * rad), Vector3.down);
+		/*	Debug.DrawRay(transform.position + (Vector3.up * 0.3f) + (Vector3.forward * rad) + (Vector3.right * rad), Vector3.down);
 			Debug.DrawRay(transform.position + (Vector3.up * 0.3f) + (Vector3.forward * rad) + (Vector3.left * rad), Vector3.down);
 			Debug.DrawRay(transform.position + (Vector3.up * 0.3f) + (Vector3.back * rad) + (Vector3.right * rad), Vector3.down);
 			Debug.DrawRay(transform.position + (Vector3.up * 0.3f) + (Vector3.back * rad) + (Vector3.left * rad), Vector3.down);
-			Debug.DrawRay(transform.position + (Vector3.up * 0.3f), Vector3.down);
+			Debug.DrawRay(transform.position + (Vector3.up * 0.3f), Vector3.down); */
 
 #endif
 			// 0.1f is a small offset to start the ray from inside the character
@@ -222,7 +222,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 				m_GroundNormal = hitInfo.normal;
 				m_IsGrounded = true;
 				m_Animator.applyRootMotion = true;
-				Debug.Log ("fr "+ hitInfo.collider.gameObject.name);
+				//Debug.Log ("fr "+ hitInfo.collider.gameObject.name);
 
 			}
 			else if (Physics.Raycast(transform.position + (Vector3.up * 0.3f) + (Vector3.forward * rad) + (Vector3.left * rad), Vector3.down, out hitInfo, m_GroundCheckDistance))
@@ -231,7 +231,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 				m_GroundNormal = hitInfo.normal;
 				m_IsGrounded = true;
 				m_Animator.applyRootMotion = true;
-				Debug.Log ("fl "+ hitInfo.collider.gameObject.name);
+				//Debug.Log ("fl "+ hitInfo.collider.gameObject.name);
 
 			}
 			else if (Physics.Raycast(transform.position + (Vector3.up * 0.3f) + (Vector3.back * rad) + (Vector3.right * rad), Vector3.down, out hitInfo, m_GroundCheckDistance))
@@ -240,7 +240,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 				m_GroundNormal = hitInfo.normal;
 				m_IsGrounded = true;
 				m_Animator.applyRootMotion = true;
-				Debug.Log ("br "+ hitInfo.collider.gameObject.name);
+				//Debug.Log ("br "+ hitInfo.collider.gameObject.name);
 
 			}
 			else if (Physics.Raycast(transform.position + (Vector3.up * 0.3f) + (Vector3.back * rad) + (Vector3.left * rad), Vector3.down, out hitInfo, m_GroundCheckDistance))
@@ -249,7 +249,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 				m_GroundNormal = hitInfo.normal;
 				m_IsGrounded = true;
 				m_Animator.applyRootMotion = true;
-				Debug.Log ("bl "+ hitInfo.collider.gameObject.name);
+				//Debug.Log ("bl "+ hitInfo.collider.gameObject.name);
 
 			}
 			else if (Physics.Raycast(transform.position + (Vector3.up * 0.1f), Vector3.down, out hitInfo, m_GroundCheckDistance))
@@ -258,12 +258,12 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 				m_GroundNormal = hitInfo.normal;
 				m_IsGrounded = true;
 				m_Animator.applyRootMotion = true;
-				Debug.Log ("center "+ hitInfo.collider.gameObject.name);
+				//Debug.Log ("center "+ hitInfo.collider.gameObject.name);
 
 			}
 			else
 			{
-				Debug.Log ("no cast");
+				//Debug.Log ("no cast");
 				m_IsGrounded = false;
 				m_GroundNormal = Vector3.up;
 				m_Animator.applyRootMotion = false;

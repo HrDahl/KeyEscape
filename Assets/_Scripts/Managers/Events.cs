@@ -51,3 +51,9 @@ public class PickUpKey : GameEvent {
         this.key = key;
     }
 }
+
+public class OpenGate : GameEvent {
+
+	public OpenGate () {
+	}
+}

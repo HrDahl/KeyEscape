@@ -76,6 +76,10 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
+	public void OpenGate() {
+		EventManager.Instance.TriggerEvent (new OpenGate ());
+	}
+
    	private void PauseGame ()
 	{
 		_GameState = GameState.Paused;
