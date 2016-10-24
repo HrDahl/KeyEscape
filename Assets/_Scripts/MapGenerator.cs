@@ -12,6 +12,8 @@ public class MapGenerator : MonoBehaviour
 	public GameObject[] keyList;
 	public GameObject[] gateList;
 
+	public GameObject level1;
+
 	public GameObject meleeAI;
 	public GameObject shooterAI;
 	public GameObject sniperAI;
@@ -117,7 +119,12 @@ public class MapGenerator : MonoBehaviour
                     
 				case "W":
 					GameObject watchTower = (GameObject)Instantiate (environmentList [0], new Vector3 (x, 3.7f, -y), Quaternion.identity);
-					watchTower.transform.parent = containerList [3].transform;
+					watchTower.transform.parent = containerList [2].transform;
+					break;
+
+				case "M": 
+					GameObject room1 = (GameObject)Instantiate (level1, new Vector3 (x, 0.5f, -y), Quaternion.identity);
+					room1.transform.parent = containerList [3].transform;
 					break;
 
 				case "1":

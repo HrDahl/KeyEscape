@@ -47,6 +47,13 @@ namespace AIns.FSM
 					shootCooldown = false;
 				}
 			}
+
+			if (playerSpotted) {
+				if (!playSound) {
+					audio.Play ();
+					playSound = true;
+				}
+			}
 		}
 
 		// We need to tell the state machine where to start
@@ -65,11 +72,7 @@ namespace AIns.FSM
 				player = GameObject.FindGameObjectWithTag ("Player");
 			}
 			if (playerSpotted) {
-				if (!playSound) 
-				{
-					audio.Play ();
-					playSound = true;
-				}
+				
 
 				yield return new TransitionTo (AttackState, DefaultTransition);
 			} else {
