@@ -18,8 +18,7 @@ public class MapGenerator : MonoBehaviour
 	public GameObject cameraStand;
 	public GameObject player;
 	public GameObject room;
-        public GameObject tutorialRoom;
-
+    public GameObject tutorialRoom;
 
 	public float steepFactor = 1f;
 	int colCount = 0;
@@ -229,7 +228,7 @@ public class MapGenerator : MonoBehaviour
 	private string[] ReadTextFile ()
 	{
 
-		TextAsset data = Resources.Load ("Full_Level_Room2") as TextAsset;
+		TextAsset data = Resources.Load ("Full_Level") as TextAsset;
 
 		string[] content = data.text.Split ('\n');
 
