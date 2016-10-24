@@ -13,10 +13,8 @@ public class MapGenerator : MonoBehaviour
 	public GameObject[] gateList;
 
 	public GameObject level1;
+	public GameObject level4;
 
-	public GameObject meleeAI;
-	public GameObject shooterAI;
-	public GameObject sniperAI;
 	public GameObject cameraStand;
 	public GameObject player;
 	public GameObject room;
@@ -68,36 +66,9 @@ public class MapGenerator : MonoBehaviour
 
 					break;
 
-				case "E":
-					GameObject meleeEnemy = (GameObject)Instantiate (meleeAI, new Vector3 (x, 0.5f, -y), Quaternion.identity);
-					meleeEnemy.transform.parent = containerList [0].transform;
-					break;
-
                 case "Q":
                      Instantiate (tutorialRoom, new Vector3 (x + 1.5f, 0.8f, -y), Quaternion.identity);
                      break;
-
-				case "R":
-					GameObject shooterEnemy = (GameObject)Instantiate (shooterAI, new Vector3 (x, 0.5f, -y), Quaternion.identity);
-					shooterEnemy.transform.parent = containerList [0].transform;
-					break;
-				case "U":
-					GameObject sniperEnemy = (GameObject)Instantiate (sniperAI, new Vector3 (x, 0.5f, -y), Quaternion.identity);
-					sniperEnemy.transform.parent = containerList [0].transform;
-					break;
-				case "Y":
-					GameObject cameraGo = (GameObject)Instantiate (cameraStand, new Vector3 (x, 0.5f, -y), Quaternion.identity);
-					cameraGo.transform.parent = containerList [0].transform;
-					break;
-				case "H":
-					GameObject hWall = (GameObject)Instantiate (obstacleList [0], new Vector3 (x - 0.1f, 1f, -y - 0.5f), obstacleList [0].transform.rotation);
-					hWall.transform.parent = containerList [2].transform;
-					break;
-
-				case "V":
-					GameObject vWall = (GameObject)Instantiate (obstacleList [1], new Vector3 (x - 0.5f, 1f, -y), obstacleList [1].transform.rotation);
-					vWall.transform.parent = containerList [2].transform;
-					break;
 
 				case "B":
 					GameObject box = (GameObject)Instantiate (obstacleList [5], new Vector3 (x, 0.5f, -y), Quaternion.identity);
@@ -109,18 +80,8 @@ public class MapGenerator : MonoBehaviour
 					barrel.transform.parent = containerList [2].transform;
 					break;
 
-				case "G":
-					GameObject bridge = (GameObject)Instantiate (obstacleList [4], new Vector3 (x, 0.5f, -y - 0.5f), Quaternion.identity);
-					bridge.transform.parent = containerList [2].transform;
-					break;
-
 				case "P":
 					Instantiate (player, new Vector3 (x, 0.5f, -y), Quaternion.identity);
-					break;
-
-				case "K":
-					GameObject cWall = (GameObject)Instantiate (obstacleList [2], new Vector3 (x - 0.1f, 1f, -y - 0.5f), Quaternion.identity);
-					cWall.transform.parent = containerList [2].transform;
 					break;
                     
 				case "W":
@@ -133,45 +94,11 @@ public class MapGenerator : MonoBehaviour
 					room1.transform.parent = containerList [3].transform;
 					break;
 
-				case "1":
-					GameObject greenKey = (GameObject)Instantiate (keyList [0], new Vector3 (x, 1f, -y), Quaternion.identity);
-					greenKey.transform.parent = containerList [4].transform;
-					break;                       
-
-				case "2":
-					GameObject blueKey = (GameObject)Instantiate (keyList [1], new Vector3 (x, 1f, -y), Quaternion.identity);
-					blueKey.transform.parent = containerList [4].transform;
-					break;       
-
-				case "3":
-					GameObject redKey = (GameObject)Instantiate (keyList [2], new Vector3 (x, 1f, -y), Quaternion.identity);
-					redKey.transform.parent = containerList [4].transform;
-					break;    
-
-				case "4":
-					GameObject rainbowKey = (GameObject)Instantiate (keyList [3], new Vector3 (x, 1f, -y), Quaternion.identity);
-					rainbowKey.transform.parent = containerList [4].transform;
-					break;       
-
-				case "9":
-					GameObject greenGate = (GameObject)Instantiate (gateList [0], new Vector3 (x + 0.4f, 1f, -y - 0.5f), Quaternion.identity);
-					greenGate.transform.parent = containerList [5].transform;
-					break;                           
-
-				case "8":
-					GameObject blueGate = (GameObject)Instantiate (gateList [1], new Vector3 (x + 0.4f, 1f, -y - 0.5f), Quaternion.identity);
-					blueGate.transform.parent = containerList [5].transform;
-					break;  
-                    
-				case "7":
-					GameObject redGate = (GameObject)Instantiate (gateList [2], new Vector3 (x + 0.4f, 1f, -y - 0.5f), Quaternion.identity);
-					redGate.transform.parent = containerList [5].transform;
-					break;  
-                    
-				case "6":
-					GameObject rainbowGate = (GameObject)Instantiate (gateList [3], new Vector3 (x + 0.4f, 1f, -y - 0.5f), Quaternion.identity);
-					rainbowGate.transform.parent = containerList [5].transform;
-					break;  
+				case "N": 
+					GameObject room4 = (GameObject)Instantiate (level4, new Vector3 (x, 0.5f, -y), Quaternion.identity);
+					room4.transform.parent = containerList [3].transform;
+					break;
+    
 				case "Z":
 					Instantiate (room, new Vector3 (x,0.5f, -y), Quaternion.identity);
 					break;
