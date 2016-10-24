@@ -62,6 +62,8 @@ public class GateController : MonoBehaviour {
 	}
 
 	public void OpenGate(GameEvent e) {
+
+        Debug.Log("HEY");
 		if (canOpen) {
 			canOpen = false;
 			foreach (Transform child in container.transform) {

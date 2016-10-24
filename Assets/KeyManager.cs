@@ -18,16 +18,16 @@ public class KeyManager : MonoBehaviour {
     private void KeyPickUp(PickUpKey e) {
         Debug.Log(e.key.name);
         switch (e.key.name) {
-            case "Green Key(Clone)":
+            case "Green Key":
                 keyList[0].GetComponent<Image>().sprite = keyMaterials[0];
                 break;
-            case "Blue Key(Clone)":
+            case "Blue Key":
                 keyList[1].GetComponent<Image>().sprite = keyMaterials[1];
                 break;
-            case "Red Key(Clone)":
+            case "Red Key":
                 keyList[2].GetComponent<Image>().sprite = keyMaterials[2];
                 break;
-            case "Rainbow Key(Clone)":
+            case "Rainbow Key":
                 keyList[3].GetComponent<Image>().sprite = keyMaterials[3];
                 break;
             default:

@@ -19,6 +19,8 @@ public class MapGenerator : MonoBehaviour
 	public GameObject sniperAI;
 	public GameObject cameraStand;
 	public GameObject player;
+	public GameObject room;
+    public GameObject tutorialRoom;
 
 	public float steepFactor = 1f;
 	int colCount = 0;
@@ -70,6 +72,10 @@ public class MapGenerator : MonoBehaviour
 					GameObject meleeEnemy = (GameObject)Instantiate (meleeAI, new Vector3 (x, 0.5f, -y), Quaternion.identity);
 					meleeEnemy.transform.parent = containerList [0].transform;
 					break;
+
+                case "Q":
+                     Instantiate (tutorialRoom, new Vector3 (x + 1.5f, 0.8f, -y), Quaternion.identity);
+                     break;
 
 				case "R":
 					GameObject shooterEnemy = (GameObject)Instantiate (shooterAI, new Vector3 (x, 0.5f, -y), Quaternion.identity);
@@ -166,6 +172,9 @@ public class MapGenerator : MonoBehaviour
 					GameObject rainbowGate = (GameObject)Instantiate (gateList [3], new Vector3 (x + 0.4f, 1f, -y - 0.5f), Quaternion.identity);
 					rainbowGate.transform.parent = containerList [5].transform;
 					break;  
+				case "Z":
+					Instantiate (room, new Vector3 (x,0.5f, -y), Quaternion.identity);
+					break;
 
 				default:
 					break;

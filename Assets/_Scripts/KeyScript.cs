@@ -9,7 +9,7 @@ public class KeyScript : MonoBehaviour {
 
     void OnTriggerEnter(Collider other){
         if (other.gameObject.CompareTag ("Player")) {
-
+            
             EventManager.Instance.TriggerEvent(new PickUpKey(gameObject));
 
             gameObject.SetActive(false);
