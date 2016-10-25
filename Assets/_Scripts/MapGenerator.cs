@@ -12,13 +12,10 @@ public class MapGenerator : MonoBehaviour
 	public GameObject[] keyList;
 	public GameObject[] gateList;
 
-	public GameObject level1;
-	public GameObject level4;
+    public GameObject[] roomList;
 
 	public GameObject cameraStand;
 	public GameObject player;
-	public GameObject room;
-    public GameObject tutorialRoom;
 
 	public float steepFactor = 1f;
 	int colCount = 0;
@@ -66,10 +63,6 @@ public class MapGenerator : MonoBehaviour
 
 					break;
 
-                case "Q":
-                     Instantiate (tutorialRoom, new Vector3 (x + 1.5f, 0.8f, -y), Quaternion.identity);
-                     break;
-
 				case "B":
 					GameObject box = (GameObject)Instantiate (obstacleList [5], new Vector3 (x, 0.5f, -y), Quaternion.identity);
 					box.transform.parent = containerList [2].transform;
@@ -88,18 +81,23 @@ public class MapGenerator : MonoBehaviour
 					GameObject watchTower = (GameObject)Instantiate (environmentList [0], new Vector3 (x, 3.7f, -y), Quaternion.identity);
 					watchTower.transform.parent = containerList [2].transform;
 					break;
+               
+                    case "1":
+                        Instantiate(roomList[0], new Vector3(x + 1.5f, 0.8f, -y), Quaternion.identity);
+                        Debug.Log("");
+                    break;
 
-				case "M": 
-					GameObject room1 = (GameObject)Instantiate (level1, new Vector3 (x, 0.4f, -y), Quaternion.Euler(0, 0, 0));
+				case "2":
+                    Instantiate (roomList[1], new Vector3 (x,0.5f, -y), Quaternion.Euler(0, 270, 0));
 					break;
 
-				case "N": 
-					GameObject room4 = (GameObject)Instantiate (level4, new Vector3 (x, 0.4f, -y), Quaternion.Euler(0, 180, 0));
-					break;
-    
-				case "Z":
-					Instantiate (room, new Vector3 (x,0.5f, -y), Quaternion.Euler(0, 270, 0));
-					break;
+                case "3": 
+                    Instantiate (roomList[2], new Vector3 (x, 0.4f, -y), Quaternion.Euler(0, 0, 0));
+                    break;
+
+                case "4": 
+                    Instantiate (roomList[3], new Vector3 (x, 0.4f, -y), Quaternion.Euler(0, 180, 0));
+                    break;
 
 				default:
 					break;

@@ -104,9 +104,6 @@ public class roomTimer : MonoBehaviour {
 			miliseconds = timeStr.Substring (3);
 		}
 
-        string color1 = "";
-        string color2 = "";
-
         if (timeAmount < 10f) {
             seconds = timeStr.Substring(0, 1);
             miliseconds = timeStr.Substring(1);

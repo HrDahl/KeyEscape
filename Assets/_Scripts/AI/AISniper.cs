@@ -8,7 +8,7 @@ namespace AIns.FSM
 	{
 
 	
-		AudioSource audio;
+		new AudioSource audio;
 		bool playSound = false;
 
 		public float fireRate = 3f;

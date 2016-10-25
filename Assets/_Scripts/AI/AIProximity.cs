@@ -27,8 +27,6 @@ public class AIProximity : MonoBehaviour
 		if (other.gameObject.tag == "Player") {
 
 			Vector3 direction = other.transform.position - parent.transform.position;
-			float angle = Vector3.Angle (direction, parent.transform.forward);
-
 
 			RaycastHit hit;
 
@@ -39,9 +37,6 @@ public class AIProximity : MonoBehaviour
 				} 
 
 			}
-
-
-
 		}
 	}
 }
