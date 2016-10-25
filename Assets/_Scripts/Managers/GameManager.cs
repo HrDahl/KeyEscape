@@ -73,13 +73,12 @@ public class GameManager : MonoBehaviour
         int counter = 0;
 
         foreach (Transform child in menu.transform) {
-            if (counter == 0) {
+            child.gameObject.SetActive(true);
+
+            if (counter == 3) {
                 child.gameObject.SetActive(false);
             }
-
-            if (counter > 0) {
-                child.gameObject.SetActive(true);
-            }
+            counter++;
         }
 
         EventManager.Instance.TriggerEvent(new StartTimer(overallTimer));
