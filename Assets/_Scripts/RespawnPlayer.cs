@@ -7,9 +7,10 @@ public class RespawnPlayer : MonoBehaviour {
 	private GameObject room2RespawnPosition;
 	private GameObject room3RespawnPosition;
 	private GameObject room4RespawnPosition;
-	private GameObject blueKey;
-	private GameObject redKey;
-	private GameObject rainbowKey;
+//	private GameObject blueKey;
+//	private GameObject redKey;
+//	private GameObject rainbowKey;
+//	private GameObject level2;
 	private int numberOfOpenedGates = 0;
 
 	void OnEnable() {
@@ -28,30 +29,37 @@ public class RespawnPlayer : MonoBehaviour {
 		room2RespawnPosition = GameObject.FindGameObjectWithTag("RespawnRoom2");
 		room3RespawnPosition = GameObject.FindGameObjectWithTag("RespawnRoom3");
 		room4RespawnPosition = GameObject.FindGameObjectWithTag("RespawnRoom4");
-		blueKey = GameObject.FindGameObjectWithTag("BluePass");
-		redKey = GameObject.FindGameObjectWithTag("RedPass");
-		rainbowKey = GameObject.FindGameObjectWithTag("RainbowPass");
+//		blueKey = GameObject.FindGameObjectWithTag("BluePass");
+//		redKey = GameObject.FindGameObjectWithTag("RedPass");
+//		rainbowKey = GameObject.FindGameObjectWithTag("RainbowPass");
+//		level2 = GameObject.FindGameObjectWithTag("Level2");
+
 	}
 
 	private void Respawn(DeadEvent e){
 		if (numberOfOpenedGates == 2) {
 			player.transform.position = room2RespawnPosition.transform.position;
-			if (blueKey.activeSelf == false) {
-				Debug.Log ("inside false");
-				player.GetComponent<Renderer> ().material.color = Color.green;
-				blueKey.SetActive (true);
+			if (player.GetComponent<PlayerController> ().keysObtained.Count > 1) {
+				player.GetComponentsInChildren<Transform>()[1].GetComponent<Renderer> ().material.color = Color.green;
+				Debug.Log(player.GetComponentInChildren<Transform>());
+				player.GetComponent<PlayerController> ().keysObtained [1].SetActive (true);
+				player.GetComponent<PlayerController> ().keysObtained.RemoveAt(1);
 			}
 		}
 		if (numberOfOpenedGates == 4) {
 			player.transform.position = room3RespawnPosition.transform.position;
-			if (redKey.activeInHierarchy == false) {
-				redKey.SetActive (true);
+			if (player.GetComponent<PlayerController> ().keysObtained.Count > 2) {
+				player.GetComponentsInChildren<Transform>()[1].GetComponent<Renderer> ().material.color = Color.blue;
+				player.GetComponent<PlayerController> ().keysObtained [2].SetActive (true);
+				player.GetComponent<PlayerController> ().keysObtained.RemoveAt(2);
 			}
 		}
 		if (numberOfOpenedGates == 6) {
 			player.transform.position = room4RespawnPosition.transform.position;
-			if (rainbowKey.activeInHierarchy == false) {
-				rainbowKey.SetActive (true);
+			if (player.GetComponent<PlayerController> ().keysObtained.Count > 3) {
+				player.GetComponentsInChildren<Transform>()[1].GetComponent<Renderer> ().material.color = Color.red;
+				player.GetComponent<PlayerController> ().keysObtained [3].SetActive (true);
+				player.GetComponent<PlayerController> ().keysObtained.RemoveAt(3);
 			}
 		}
 	}
