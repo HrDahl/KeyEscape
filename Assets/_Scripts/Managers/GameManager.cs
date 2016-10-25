@@ -40,7 +40,8 @@ public class GameManager : MonoBehaviour
 	void Awake ()
 	{
         Time.timeScale = 1;
-		EventManager.Instance.TriggerEvent(new InstantiateGame());
+        EventManager.Instance.TriggerEvent(new InstantiateGame());
+        EventManager.Instance.TriggerEvent(new StartTimer(30f));
 	}
 
 	void Update () {

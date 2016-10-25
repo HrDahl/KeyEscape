@@ -57,3 +57,12 @@ public class OpenGate : GameEvent {
 	public OpenGate () {
 	}
 }
+
+public class StartTimer : GameEvent {
+
+    public float Time;
+
+    public StartTimer(float Time) {
+        this.Time = Time;
+    }
+}
