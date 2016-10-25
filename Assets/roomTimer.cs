@@ -7,8 +7,8 @@ public class roomTimer : MonoBehaviour {
     float timeAmount = 0.0f;
     bool beginTime = false;
 
-    public float turnOrange = 20f;
-    public float turnRed = 10f;
+    public float turnOrange = 70f;
+    public float turnRed = 20f;
 
     void OnEnable ()
     {
@@ -25,10 +25,11 @@ public class roomTimer : MonoBehaviour {
         if (e.Time > 0f) {
             timeAmount = e.Time;
         }
+
         beginTime = beginTime ? false : true;
 
         if (!beginTime) {
-            StartCoroutine(doneLevel(7f));
+            StartCoroutine(doneLevel(4f));
         }
 
     }
@@ -132,7 +133,7 @@ public class roomTimer : MonoBehaviour {
         }
 
         GetComponent<Text>().lineSpacing = 1.5f;
-        GetComponent<Text>().text = completed + "\n" + "<color=white><size=80>" + seconds  + "</size></color>" + "<color=white><size=40>" + miliseconds + " seconds</size></color>";
+        GetComponent<Text>().text = completed + "\n" + "<color=white><size=80>" + seconds  + "</size></color>" + "<color=white><size=40>" + miliseconds + " seconds left</size></color>";
         yield return new WaitForSeconds(secondsToWait);
         GetComponent<Text>().text = "";
     }
