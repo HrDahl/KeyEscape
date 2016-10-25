@@ -26,8 +26,6 @@ Then we apply the smoothed values to the transform's position.
 	public float heightDamping = 2.0f;
 	public float rotationDamping = 3.0f;
 
-    private bool moveTowardsPlayer = false;
-
 	void OnEnable ()
 	{
         //EventManager.Instance.StartListeningOnce<ChunkEnteredEvent>(MoveWithPlayer);
