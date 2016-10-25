@@ -7,6 +7,9 @@ public class RespawnPlayer : MonoBehaviour {
 	private GameObject room2RespawnPosition;
 	private GameObject room3RespawnPosition;
 	private GameObject room4RespawnPosition;
+	private GameObject blueKey;
+	private GameObject redKey;
+	private GameObject rainbowKey;
 	private int numberOfOpenedGates = 0;
 
 	void OnEnable() {
@@ -25,17 +28,31 @@ public class RespawnPlayer : MonoBehaviour {
 		room2RespawnPosition = GameObject.FindGameObjectWithTag("RespawnRoom2");
 		room3RespawnPosition = GameObject.FindGameObjectWithTag("RespawnRoom3");
 		room4RespawnPosition = GameObject.FindGameObjectWithTag("RespawnRoom4");
+		blueKey = GameObject.FindGameObjectWithTag("BluePass");
+		redKey = GameObject.FindGameObjectWithTag("RedPass");
+		rainbowKey = GameObject.FindGameObjectWithTag("RainbowPass");
 	}
 
 	private void Respawn(DeadEvent e){
 		if (numberOfOpenedGates == 2) {
 			player.transform.position = room2RespawnPosition.transform.position;
+			if (blueKey.activeSelf == false) {
+				Debug.Log ("inside false");
+				player.GetComponent<Renderer> ().material.color = Color.green;
+				blueKey.SetActive (true);
+			}
 		}
 		if (numberOfOpenedGates == 4) {
 			player.transform.position = room3RespawnPosition.transform.position;
+			if (redKey.activeInHierarchy == false) {
+				redKey.SetActive (true);
+			}
 		}
 		if (numberOfOpenedGates == 6) {
 			player.transform.position = room4RespawnPosition.transform.position;
+			if (rainbowKey.activeInHierarchy == false) {
+				rainbowKey.SetActive (true);
+			}
 		}
 	}
 
