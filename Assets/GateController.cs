@@ -63,13 +63,13 @@ public class GateController : MonoBehaviour {
 
 	public void OpenGate(GameEvent e) {
 
-        Debug.Log("HEY");
 		if (canOpen) {
 			canOpen = false;
 			foreach (Transform child in container.transform) {
 				child.gameObject.SetActive (false);
 			}			
 			StartCoroutine (beginOpen());
+            EventManager.Instance.TriggerEvent(new StartTimer(0f));
 		}
 	}
 
@@ -80,5 +80,7 @@ public class GateController : MonoBehaviour {
 			transform.parent.position = Vector3.MoveTowards(transform.parent.position, targetPosition, Time.deltaTime);
 			yield return new WaitForEndOfFrame();
 		}
+
+        gameObject.SetActive(false);
 	}
 }
