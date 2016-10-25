@@ -90,12 +90,12 @@ public class MapGenerator : MonoBehaviour
 					break;
 
 				case "M": 
-					GameObject room1 = (GameObject)Instantiate (level1, new Vector3 (x, 0.5f, -y), Quaternion.identity);
+					GameObject room1 = (GameObject)Instantiate (level1, new Vector3 (x, 0.4f, -y), Quaternion.identity);
 					room1.transform.parent = containerList [3].transform;
 					break;
 
 				case "N": 
-					GameObject room4 = (GameObject)Instantiate (level4, new Vector3 (x, 0.5f, -y), Quaternion.identity);
+					GameObject room4 = (GameObject)Instantiate (level4, new Vector3 (x, 0.4f, -y), Quaternion.identity);
 					room4.transform.parent = containerList [3].transform;
 					break;
     
