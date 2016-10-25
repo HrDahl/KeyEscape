@@ -72,3 +72,12 @@ public class StartTimer : GameEvent {
         this.Time = Time;
     }
 }
+
+public class RemoveUI : GameEvent {
+
+    public int amountToRemove;
+
+    public RemoveUI(int amountToRemove) {
+        this.amountToRemove = amountToRemove;
+    }
+}
