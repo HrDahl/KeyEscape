@@ -6,6 +6,7 @@ public class KeyManager : MonoBehaviour {
 
     public Image[] keyList; 
     public Sprite[] keyMaterials;
+	public Material rainbow;
 	private GameObject player;
 
     void OnEnable() {
@@ -33,7 +34,7 @@ public class KeyManager : MonoBehaviour {
                 break;
             case "Rainbow Key":
                 keyList[3].GetComponent<Image>().sprite = keyMaterials[3];
-				player.GetComponent<Renderer> ().material.color = Color.white;
+				player.GetComponent<Renderer> ().material = rainbow;
                 break;
             default:
                 break;
