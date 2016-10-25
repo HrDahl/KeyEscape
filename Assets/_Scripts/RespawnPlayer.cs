@@ -11,12 +11,12 @@ public class RespawnPlayer : MonoBehaviour {
 
 	void OnEnable() {
 		EventManager.Instance.StartListening<DeadEvent>(Respawn);
-		EventManager.Instance.StartListening<OpenGate>(GatesOpened);
+		EventManager.Instance.StartListening<CompletedLevel>(GatesOpened);
 	}
 
 	void OnDestroy() {
 		EventManager.Instance.StopListening<DeadEvent>(Respawn);
-		EventManager.Instance.StopListening<OpenGate>(GatesOpened);
+		EventManager.Instance.StopListening<CompletedLevel>(GatesOpened);
 	}
 
 	// Use this for initialization
@@ -39,7 +39,8 @@ public class RespawnPlayer : MonoBehaviour {
 		}
 	}
 
-	private void GatesOpened(OpenGate e){
+	private void GatesOpened(CompletedLevel e){
 		numberOfOpenedGates++;
+		Debug.Log (numberOfOpenedGates);
 	}
 }
