@@ -6,7 +6,9 @@ using UnityEngine.UI;
 public class GateController : MonoBehaviour {
 
 	bool canOpen = false;
+    bool openedBefore = false;
 	GameObject container;
+    Vector3 initialPosition;
 
 	void OnEnable() {
 		EventManager.Instance.StartListening<OpenGate>(OpenGate);
@@ -18,6 +20,7 @@ public class GateController : MonoBehaviour {
 
 	void Start() {
 		container = (GameObject)GameObject.FindGameObjectWithTag ("OpenGate");
+        initialPosition = new Vector3(transform.parent.position.x, transform.parent.position.y, transform.parent.position.z);
 	}
 
     void OnTriggerEnter(Collider other){
@@ -65,22 +68,32 @@ public class GateController : MonoBehaviour {
 
 		if (canOpen) {
 			canOpen = false;
+            if (!openedBefore) {
+                EventManager.Instance.TriggerEvent(new StartTimer(0f));
+                EventManager.Instance.TriggerEvent (new CompletedLevel ());
+            }
+            openedBefore = true;
 			foreach (Transform child in container.transform) {
 				child.gameObject.SetActive (false);
 			}			
 			StartCoroutine (beginOpen());
-            EventManager.Instance.TriggerEvent(new StartTimer(0f));
 		}
 	}
 
-	IEnumerator beginOpen() {
-		Vector3 targetPosition = new Vector3 (transform.parent.position.x, transform.parent.position.y + 3f, transform.parent.position.z);
+    IEnumerator beginOpen() {
+
+        Vector3 targetPosition = new Vector3 (initialPosition.x, initialPosition.y + 3f, initialPosition.z);
 
 		while(Vector3.Distance(transform.parent.position, targetPosition) > 0.01f) {
-			transform.parent.position = Vector3.MoveTowards(transform.parent.position, targetPosition, Time.deltaTime);
+			transform.parent.position = Vector3.MoveTowards(transform.parent.position, targetPosition, Time.deltaTime * 10);
 			yield return new WaitForEndOfFrame();
 		}
 
-        gameObject.SetActive(false);
+        yield return new WaitForSeconds(1f);
+
+        while(Vector3.Distance(transform.parent.position, initialPosition) > 0.01f) {
+            transform.parent.position = Vector3.MoveTowards(transform.parent.position, initialPosition, Time.deltaTime * 10);
+            yield return new WaitForEndOfFrame();
+        }
 	}
 }

@@ -58,6 +58,12 @@ public class OpenGate : GameEvent {
 	}
 }
 
+public class CompletedLevel : GameEvent {
+
+    public CompletedLevel () {
+    }
+}
+
 public class StartTimer : GameEvent {
 
     public float Time;
