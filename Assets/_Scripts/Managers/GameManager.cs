@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour
 	{
         Time.timeScale = 1;
         EventManager.Instance.TriggerEvent(new InstantiateGame());
-        EventManager.Instance.TriggerEvent(new StartTimer(30f));
+        EventManager.Instance.TriggerEvent(new StartTimer(100f));
 	}
 
 	void Update () {
