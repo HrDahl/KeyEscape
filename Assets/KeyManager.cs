@@ -35,20 +35,20 @@ public class KeyManager : MonoBehaviour {
 
     private void KeyPickUp(PickUpKey e) {
 		player = GameObject.FindGameObjectWithTag("Ethan");
-        switch (e.key.name) {
-            case "Green Key":
+        switch (e.key.tag) {
+            case "GreenPass":
                 keyList[0].GetComponent<Image>().sprite = keyMaterials[0];
 				player.GetComponent<Renderer> ().material.color = Color.green;
                 break;
-            case "Blue Key":
+            case "BluePass":
                 keyList[1].GetComponent<Image>().sprite = keyMaterials[1];
 				player.GetComponent<Renderer> ().material.color = Color.blue;
                 break;
-            case "Red Key":
+            case "RedPass":
                 keyList[2].GetComponent<Image>().sprite = keyMaterials[2];
 				player.GetComponent<Renderer> ().material.color = Color.red;
                 break;
-            case "Rainbow Key":
+            case "RainbowPass":
                 keyList[3].GetComponent<Image>().sprite = keyMaterials[3];
 				player.GetComponent<Renderer> ().material = rainbow;
                 break;

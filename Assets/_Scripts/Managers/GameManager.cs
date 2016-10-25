@@ -68,6 +68,20 @@ public class GameManager : MonoBehaviour
 
         camera.transform.position = new Vector3(5, 4f, -3f);
 
+        GameObject menu = (GameObject)GameObject.FindGameObjectWithTag("MenuUI");
+
+        int counter = 0;
+
+        foreach (Transform child in menu.transform) {
+            if (counter == 0) {
+                child.gameObject.SetActive(false);
+            }
+
+            if (counter > 0) {
+                child.gameObject.SetActive(true);
+            }
+        }
+
         EventManager.Instance.TriggerEvent(new StartTimer(overallTimer));
         EventManager.Instance.TriggerEvent(new RemoveUI(4));
 	}

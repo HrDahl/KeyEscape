@@ -10,6 +10,10 @@ public class roomTimer : MonoBehaviour {
     public float turnOrange = 70f;
     public float turnRed = 20f;
 
+    GameObject player;
+
+    public GameObject panel;
+
     void OnEnable ()
     {
         EventManager.Instance.StartListening<StartTimer> (StartTimer);
@@ -18,6 +22,10 @@ public class roomTimer : MonoBehaviour {
     void OnDisable ()
     {
         EventManager.Instance.StopListening<StartTimer> (StartTimer);
+    }
+
+    void Start() {
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     public void StartTimer(StartTimer e) {
@@ -30,8 +38,46 @@ public class roomTimer : MonoBehaviour {
 
         if (!beginTime) {
             StartCoroutine(doneLevel(4f));
+            if (player.GetComponent<PlayerController>().keysObtained.Count == 4) {
+                StopAllCoroutines();
+                initialiseFinalScreen();
+            }
         }
 
+    }
+
+    public void initialiseFinalScreen() {
+        GameObject menu = (GameObject)GameObject.FindGameObjectWithTag("MenuUI");
+
+        int counter = 0;
+
+        foreach (Transform child in menu.transform) {
+
+            if (counter == 3) {
+                child.gameObject.SetActive(true);
+            }
+
+            if (counter != 3 && counter != 4) {
+                child.gameObject.SetActive(false);
+            }
+
+            if (counter == 4) {
+                child.gameObject.GetComponent<RectTransform>().localPosition = new Vector3(0, 80f, 0);
+            }
+
+            counter++;
+        }
+
+        Color temp = panel.GetComponent<Image>().color;
+        temp.a = 255f;
+
+        panel.GetComponent<Image>().color = temp;
+
+        foreach (Transform child in panel.transform) {
+            child.gameObject.SetActive(true);
+        }
+
+        Time.timeScale = 0;
     }
 
     void FixedUpdate() {
