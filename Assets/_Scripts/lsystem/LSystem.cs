@@ -20,7 +20,6 @@ public class LSystem : MonoBehaviour {
 
 	List<Vector3> vertices = new List<Vector3>();
 	List<int> indices = new List<int>();
-	int count = 0;
     Mesh mesh;
 
     public float multiplierLeafs;

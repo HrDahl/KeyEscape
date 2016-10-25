@@ -8,7 +8,7 @@ namespace AIns.FSM
 	{
 
 	
-		AudioSource audio;
+		new AudioSource audio;
 		bool playSound = false;
 
 		public float fireRate = 3f;
@@ -27,6 +27,7 @@ namespace AIns.FSM
 		{
 			audio = GetComponent<AudioSource> ();
 			EventManager.Instance.StartListening<AlarmEvent> (Alarm);
+			EventManager.Instance.StartListening<DeadEvent> (DeadPlayer);
 
 
 		}
@@ -35,6 +36,7 @@ namespace AIns.FSM
 		{
 			
 			EventManager.Instance.StopListening<AlarmEvent> (Alarm);
+			EventManager.Instance.StopListening<DeadEvent> (DeadPlayer);
 		}
 
 		// Update is called once per frame
@@ -119,6 +121,13 @@ namespace AIns.FSM
 				} 
 			}
 		}
+
+		private void DeadPlayer(DeadEvent e) 
+		{
+			playerSpotted = false;
+		}
 	}
+
+
 
 }

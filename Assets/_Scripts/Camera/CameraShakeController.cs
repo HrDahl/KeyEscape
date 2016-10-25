@@ -4,7 +4,6 @@ using System.Collections;
 public class CameraShakeController : MonoBehaviour 
 {
 	ShakeCam shakeCam;
-	bool isShaking = false;
 	float initPosSpeed,initRotSpeed;
 
 	void OnEnable()
@@ -27,6 +26,5 @@ public class CameraShakeController : MonoBehaviour
 		yield return new WaitForSeconds(durationShake);
 		shakeCam.positionShakeSpeed = initPosSpeed;
 		shakeCam.rotationShakeSpeed = initRotSpeed;
-		isShaking = false;
 	}
 }
