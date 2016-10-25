@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
 	public float currentTime = 0.0f;
 
 	public bool isPaused = false;
+	public float overallTimer = 180f;
 
 	void OnEnable ()
 	{
@@ -41,7 +42,7 @@ public class GameManager : MonoBehaviour
 	{
         Time.timeScale = 1;
         EventManager.Instance.TriggerEvent(new InstantiateGame());
-        EventManager.Instance.TriggerEvent(new StartTimer(100f));
+        EventManager.Instance.TriggerEvent(new StartTimer(overallTimer));
 	}
 
 	void Update () {

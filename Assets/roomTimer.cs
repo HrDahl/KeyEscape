@@ -38,8 +38,19 @@ public class roomTimer : MonoBehaviour {
         if (beginTime) {
 
             string timeStr = timeAmount.ToString("n2");
-            string seconds = timeStr.Substring(0, 2);
-            string miliseconds = timeStr.Substring(2);
+			string seconds;
+			if (timeAmount <= 100) {
+				seconds = timeStr.Substring (0, 2);
+			} else {
+				seconds = timeStr.Substring (0, 3);
+			
+			}
+			string miliseconds;
+			if (timeAmount <= 100) {
+				miliseconds = timeStr.Substring (2);
+			} else {
+				miliseconds = timeStr.Substring (3);
+			}
 
             string color1 = "";
             string color2 = "";
@@ -79,8 +90,19 @@ public class roomTimer : MonoBehaviour {
         GetComponent<RectTransform>().localPosition = new Vector3(0, -55f, 0);
         GetComponent<RectTransform>().sizeDelta = new Vector2(0, 250);
         string timeStr = timeAmount.ToString("n2");
-        string seconds = timeStr.Substring(0, 2);
-        string miliseconds = timeStr.Substring(2);
+		string seconds;
+		if (timeAmount <= 100) {
+			seconds = timeStr.Substring (0, 2);
+		} else {
+			seconds = timeStr.Substring (0, 3);
+
+		}
+		string miliseconds;
+		if (timeAmount <= 100) {
+			miliseconds = timeStr.Substring (2);
+		} else {
+			miliseconds = timeStr.Substring (3);
+		}
 
         string color1 = "";
         string color2 = "";
