@@ -9,12 +9,22 @@ public class KeyManager : MonoBehaviour {
 	public Material rainbow;
 	private GameObject player;
 
+    public Sprite keyPlaceholder;
+
     void OnEnable() {
         EventManager.Instance.StartListening<PickUpKey>(KeyPickUp);
+        EventManager.Instance.StartListening<StartTimer>(RestartGame);
     }
 
     void OnDestroy() {
         EventManager.Instance.StopListening<PickUpKey>(KeyPickUp);
+        EventManager.Instance.StopListening<StartTimer>(RestartGame);
+    }
+
+    private void RestartGame(StartTimer e) {
+        foreach (var key in keyList) {
+            key.GetComponent<Image>().sprite = keyPlaceholder;
+        }
     }
 
     private void KeyPickUp(PickUpKey e) {
@@ -39,6 +49,5 @@ public class KeyManager : MonoBehaviour {
             default:
                 break;
         }
-
     }
 }
