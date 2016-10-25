@@ -70,6 +70,7 @@ public class GateController : MonoBehaviour {
 			canOpen = false;
             if (!openedBefore) {
                 EventManager.Instance.TriggerEvent(new StartTimer(0f));
+                EventManager.Instance.TriggerEvent (new CompletedLevel ());
             }
             openedBefore = true;
 			foreach (Transform child in container.transform) {

@@ -80,7 +80,7 @@ public class roomTimer : MonoBehaviour {
             if (timeAmount < -0.01f) {
                 beginTime = false;
                 GetComponent<Text>().text = "<color=#ff1919><size=80>You Died!</size></color>";
-                EventManager.Instance.TriggerEvent(new DeadEvent());
+                GameManager.Instance.RestartGame();
             }
         }
     }
