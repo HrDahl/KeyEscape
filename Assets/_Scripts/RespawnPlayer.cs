@@ -7,10 +7,6 @@ public class RespawnPlayer : MonoBehaviour {
 	private GameObject room2RespawnPosition;
 	private GameObject room3RespawnPosition;
 	private GameObject room4RespawnPosition;
-//	private GameObject blueKey;
-//	private GameObject redKey;
-//	private GameObject rainbowKey;
-//	private GameObject level2;
 	private int numberOfOpenedGates = 0;
 
 	void OnEnable() {
@@ -29,11 +25,6 @@ public class RespawnPlayer : MonoBehaviour {
 		room2RespawnPosition = GameObject.FindGameObjectWithTag("RespawnRoom2");
 		room3RespawnPosition = GameObject.FindGameObjectWithTag("RespawnRoom3");
 		room4RespawnPosition = GameObject.FindGameObjectWithTag("RespawnRoom4");
-//		blueKey = GameObject.FindGameObjectWithTag("BluePass");
-//		redKey = GameObject.FindGameObjectWithTag("RedPass");
-//		rainbowKey = GameObject.FindGameObjectWithTag("RainbowPass");
-//		level2 = GameObject.FindGameObjectWithTag("Level2");
-
 	}
 
 	private void Respawn(DeadEvent e){
@@ -41,9 +32,9 @@ public class RespawnPlayer : MonoBehaviour {
 			player.transform.position = room2RespawnPosition.transform.position;
 			if (player.GetComponent<PlayerController> ().keysObtained.Count > 1) {
 				player.GetComponentsInChildren<Transform>()[1].GetComponent<Renderer> ().material.color = Color.green;
-				Debug.Log(player.GetComponentInChildren<Transform>());
 				player.GetComponent<PlayerController> ().keysObtained [1].SetActive (true);
 				player.GetComponent<PlayerController> ().keysObtained.RemoveAt(1);
+				EventManager.Instance.TriggerEvent (new RemoveUI(3));
 			}
 		}
 		if (numberOfOpenedGates == 4) {
@@ -52,6 +43,7 @@ public class RespawnPlayer : MonoBehaviour {
 				player.GetComponentsInChildren<Transform>()[1].GetComponent<Renderer> ().material.color = Color.blue;
 				player.GetComponent<PlayerController> ().keysObtained [2].SetActive (true);
 				player.GetComponent<PlayerController> ().keysObtained.RemoveAt(2);
+				EventManager.Instance.TriggerEvent (new RemoveUI(2));
 			}
 		}
 		if (numberOfOpenedGates == 6) {
@@ -60,6 +52,7 @@ public class RespawnPlayer : MonoBehaviour {
 				player.GetComponentsInChildren<Transform>()[1].GetComponent<Renderer> ().material.color = Color.red;
 				player.GetComponent<PlayerController> ().keysObtained [3].SetActive (true);
 				player.GetComponent<PlayerController> ().keysObtained.RemoveAt(3);
+				EventManager.Instance.TriggerEvent (new RemoveUI(1));
 			}
 		}
 	}
