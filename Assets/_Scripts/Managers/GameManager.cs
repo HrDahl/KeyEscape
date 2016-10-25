@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 public enum GameState
 {
@@ -12,20 +13,14 @@ public enum GameState
 public class GameManager : MonoBehaviour
 {
     public GameState _GameState;
+    GameObject player;
+    public GameObject camera;
 
 	[HideInInspector] 
 	public float currentTime = 0.0f;
 
 	public bool isPaused = false;
 	public float overallTimer = 180f;
-
-	void OnEnable ()
-	{
-	}
-
-	void OnDisable ()
-	{
-	}
 
 	void Start ()
 	{
@@ -58,8 +53,23 @@ public class GameManager : MonoBehaviour
 	public void RestartGame ()
 	{
 		StopAllCoroutines();
-		SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
-		//  EventManager.TriggerEvent (_eventsContainer.resetGame);
+
+        player = GameObject.FindGameObjectWithTag("Player");
+
+        foreach (var key in player.GetComponent<PlayerController>().keysObtained) {
+            GameObject k = (GameObject) Instantiate(key, key.transform.position, Quaternion.identity);
+            k.SetActive(true);
+        }
+
+        player.GetComponent<PlayerController>().keysObtained = new List<GameObject>();
+        player.transform.position = new Vector3(7.003318f, 0.537219f, -3.009342f);
+        player.transform.rotation = Quaternion.Euler(0, 90, 0);
+        player.GetComponentsInChildren<Transform>()[1].GetComponent<Renderer> ().material.color = Color.gray;
+
+        camera.transform.position = new Vector3(5, 4f, -3f);
+
+        EventManager.Instance.TriggerEvent(new StartTimer(overallTimer));
+        EventManager.Instance.TriggerEvent(new RemoveUI(4));
 	}
 
 	/// <summary>

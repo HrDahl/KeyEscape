@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.Linq;
 
 public class KeyManager : MonoBehaviour {
 
@@ -9,12 +10,27 @@ public class KeyManager : MonoBehaviour {
 	public Material rainbow;
 	private GameObject player;
 
+    public Sprite keyPlaceholder;
+
     void OnEnable() {
         EventManager.Instance.StartListening<PickUpKey>(KeyPickUp);
+        EventManager.Instance.StartListening<RemoveUI>(RestartGame);
     }
 
     void OnDestroy() {
         EventManager.Instance.StopListening<PickUpKey>(KeyPickUp);
+        EventManager.Instance.StopListening<RemoveUI>(RestartGame);
+    }
+
+    private void RestartGame(RemoveUI e) {
+        int counter = e.amountToRemove;
+
+        foreach (var key in keyList.Reverse()) {
+            if (counter > 0) {
+                key.GetComponent<Image>().sprite = keyPlaceholder;
+            }
+            counter--;
+        }
     }
 
     private void KeyPickUp(PickUpKey e) {
@@ -39,6 +55,5 @@ public class KeyManager : MonoBehaviour {
             default:
                 break;
         }
-
     }
 }

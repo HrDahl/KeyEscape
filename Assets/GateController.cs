@@ -12,10 +12,12 @@ public class GateController : MonoBehaviour {
 
 	void OnEnable() {
 		EventManager.Instance.StartListening<OpenGate>(OpenGate);
+        EventManager.Instance.StartListening<StartTimer>(InitialiseGate);
 	}
 
 	void OnDestroy() {
-		EventManager.Instance.StopListening<OpenGate>(OpenGate);
+        EventManager.Instance.StopListening<OpenGate>(OpenGate);
+        EventManager.Instance.StopListening<StartTimer>(InitialiseGate);
 	}
 
 	void Start() {
@@ -34,6 +36,14 @@ public class GateController : MonoBehaviour {
 					canOpen = true;
                     break;
                 }
+            }
+        }
+    }
+
+    void OnTriggerExit(Collider other){
+        if (other.gameObject.CompareTag ("Player")) {
+            foreach (Transform child in container.transform) {
+                child.gameObject.SetActive (false);
             }
         }
     }
@@ -63,6 +73,11 @@ public class GateController : MonoBehaviour {
 			i++;
 		}
 	}
+
+    public void InitialiseGate(StartTimer e) {
+        canOpen = false;
+        openedBefore = false;
+    }
 
 	public void OpenGate(GameEvent e) {
 

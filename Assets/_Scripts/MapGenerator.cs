@@ -74,7 +74,7 @@ public class MapGenerator : MonoBehaviour
 					break;
 
 				case "P":
-					Instantiate (player, new Vector3 (x, 0.5f, -y), Quaternion.identity);
+                        Instantiate (player, new Vector3 (x, 0.5f, -y), Quaternion.Euler(new Vector3(0,90,0)));
 					break;
                     
 				case "W":
