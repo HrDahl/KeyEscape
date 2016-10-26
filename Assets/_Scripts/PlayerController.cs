@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour {
 			Debug.Log ("Ded");
 			EventManager.Instance.TriggerEvent (new DeadEvent());
 			aud.Play ();
+			currentHealth = maxHealth;
 		}
 	}
 
