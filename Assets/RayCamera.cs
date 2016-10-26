@@ -16,17 +16,22 @@ public class RayCamera : MonoBehaviour {
 
         if (Physics.Raycast(transform.position, fwd, out hit, characterDistance) && hit.transform.gameObject.tag != "Player") {
 
-            if(oldHit.transform) {
-                Color colorA = oldHit.transform.gameObject.GetComponent<Renderer>().material.color;
-                colorA.a = 1f;
-                oldHit.transform.gameObject.GetComponent<Renderer>().material.SetColor("_Color", colorA);
-            }
-
-            Color colorB = hit.transform.gameObject.GetComponent<Renderer>().material.color;
-            colorB.a = 0.2f;
-            hit.transform.gameObject.GetComponent<Renderer>().material.SetColor("_Color", colorB);
-
-            oldHit = hit;
-        }
+				if (oldHit.transform) {
+					if (oldHit.transform.name != "Detector") { 
+						Color colorA = oldHit.transform.gameObject.GetComponent<Renderer> ().material.color;
+						colorA.a = 1f;
+						oldHit.transform.gameObject.GetComponent<Renderer> ().material.SetColor ("_Color", colorA);
+					}
+				
+				}
+				if (hit.transform.name != "Detector") { 
+					Color colorB = hit.transform.gameObject.GetComponent<Renderer> ().material.color;
+					colorB.a = 0.2f;
+					hit.transform.gameObject.GetComponent<Renderer> ().material.SetColor ("_Color", colorB);
+				}	
+				oldHit = hit;
+			
+			}
+        
     }
 }

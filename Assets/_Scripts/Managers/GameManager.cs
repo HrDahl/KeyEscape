@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
     GameObject player;
     public GameObject camera;
 
+	public Material normalEthan;
+
 	[HideInInspector] 
 	public float currentTime = 0.0f;
 
@@ -64,6 +66,8 @@ public class GameManager : MonoBehaviour
         player.GetComponent<PlayerController>().keysObtained = new List<GameObject>();
         player.transform.position = new Vector3(7.003318f, 0.537219f, -3.009342f);
         player.transform.rotation = Quaternion.Euler(0, 90, 0);
+
+		player.GetComponentsInChildren<Transform>()[1].GetComponent<Renderer> ().material = normalEthan;
         player.GetComponentsInChildren<Transform>()[1].GetComponent<Renderer> ().material.color = Color.gray;
 
         camera.transform.position = new Vector3(5, 4f, -3f);
@@ -78,9 +82,14 @@ public class GameManager : MonoBehaviour
             if (counter == 3) {
                 child.gameObject.SetActive(false);
             }
+
+			if (counter == 4) {
+				child.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -75f);
+			}
             counter++;
         }
 
+		Time.timeScale = 1;
         EventManager.Instance.TriggerEvent(new StartTimer(overallTimer));
         EventManager.Instance.TriggerEvent(new RemoveUI(4));
 	}
