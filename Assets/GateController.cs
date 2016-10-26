@@ -84,7 +84,9 @@ public class GateController : MonoBehaviour {
 	public void OpenGate(GameEvent e) {
 
 		if (canOpen) {
-			audio.Play ();
+			if (audio != null) {
+				audio.Play ();
+			}
 			canOpen = false;
             if (!openedBefore) {
                 EventManager.Instance.TriggerEvent(new StartTimer(0f));
