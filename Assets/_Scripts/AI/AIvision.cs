@@ -28,7 +28,6 @@ public class AIvision : MonoBehaviour
 			RaycastHit hit;
 			Vector3 direction = player.transform.position - parent.transform.position;
 			if (Physics.Raycast (parent.transform.position, direction.normalized, out hit, range)) {
-				Debug.Log (hit.collider.gameObject.name);
 				if (hit.collider.gameObject.tag == "Player") {
 					chasing = true;
 					ai.playerSpotted = true;
@@ -50,11 +49,9 @@ public class AIvision : MonoBehaviour
 				RaycastHit hit;
 
 				if (Physics.Raycast (parent.transform.position , direction.normalized, out hit, range)) {
-					Debug.Log (hit.collider.gameObject.name);
 					if (hit.collider.gameObject.tag == "Player") {
 						inSight = true;
 						chasing = true;
-						Debug.Log ("Sighted!");
 						ai.playerSpotted = true;;
 					} else {
 						inSight = false;

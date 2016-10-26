@@ -59,6 +59,5 @@ public class RespawnPlayer : MonoBehaviour {
 
 	private void GatesOpened(CompletedLevel e){
 		numberOfOpenedGates++;
-		Debug.Log (numberOfOpenedGates);
 	}
 }
