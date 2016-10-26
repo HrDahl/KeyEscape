@@ -7,6 +7,7 @@ public class RespawnPlayer : MonoBehaviour {
 	private GameObject room2RespawnPosition;
 	private GameObject room3RespawnPosition;
 	private GameObject room4RespawnPosition;
+	public GameManager gm; 
 	private int numberOfOpenedGates = 0;
 
 	void OnEnable() {
@@ -25,6 +26,15 @@ public class RespawnPlayer : MonoBehaviour {
 		room2RespawnPosition = GameObject.FindGameObjectWithTag("RespawnRoom2");
 		room3RespawnPosition = GameObject.FindGameObjectWithTag("RespawnRoom3");
 		room4RespawnPosition = GameObject.FindGameObjectWithTag("RespawnRoom4");
+		gm = GetComponent<GameManager> ();
+	}
+
+	void Update () {
+		if (gm.enabled == false) {
+			if (Input.GetKeyDown (KeyCode.Space)) {
+				gm.enabled = true;
+			}
+		}
 	}
 
 	private void Respawn(DeadEvent e){
@@ -59,5 +69,6 @@ public class RespawnPlayer : MonoBehaviour {
 
 	private void GatesOpened(CompletedLevel e){
 		numberOfOpenedGates++;
+
 	}
 }
