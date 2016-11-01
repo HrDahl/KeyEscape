@@ -33,8 +33,12 @@ public class roomTimer : MonoBehaviour {
         if (e.Time > 0f) {
             timeAmount = e.Time;
         }
+			
+       	beginTime = beginTime ? false : true;
 
-        beginTime = beginTime ? false : true;
+		if (player.GetComponent<PlayerController> ().keysObtained.Count == 0) {
+			beginTime = true;
+		}
 
         if (!beginTime) {
             StartCoroutine(doneLevel(4f));
@@ -50,16 +54,15 @@ public class roomTimer : MonoBehaviour {
         GameObject menu = (GameObject)GameObject.FindGameObjectWithTag("MenuUI");
 
         int counter = 0;
-
+		
         foreach (Transform child in menu.transform) {
-
-            if (counter == 3) {
-                child.gameObject.SetActive(true);
-            }
-
-            if (counter != 3 && counter != 4) {
+			if (counter < 3) {
                 child.gameObject.SetActive(false);
             }
+
+			if (counter == 3) {
+				child.gameObject.SetActive(true);
+			}
 
             if (counter == 4) {
                 child.gameObject.GetComponent<RectTransform>().localPosition = new Vector3(0, 80f, 0);
@@ -72,10 +75,6 @@ public class roomTimer : MonoBehaviour {
         temp.a = 255f;
 
         panel.GetComponent<Image>().color = temp;
-
-        foreach (Transform child in panel.transform) {
-            child.gameObject.SetActive(true);
-        }
 
         Time.timeScale = 0;
     }

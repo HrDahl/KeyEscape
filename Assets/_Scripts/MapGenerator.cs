@@ -84,7 +84,7 @@ public class MapGenerator : MonoBehaviour
                
                     case "1":
                         Instantiate(roomList[0], new Vector3(x + 1.5f, 0.8f, -y), Quaternion.identity);
-                        Debug.Log("");
+
                     break;
 
 				case "2":

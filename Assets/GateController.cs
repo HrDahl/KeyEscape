@@ -9,6 +9,7 @@ public class GateController : MonoBehaviour {
     bool openedBefore = false;
 	GameObject container;
     Vector3 initialPosition;
+	AudioSource audio;
 
 	void OnEnable() {
 		EventManager.Instance.StartListening<OpenGate>(OpenGate);
@@ -21,6 +22,7 @@ public class GateController : MonoBehaviour {
 	}
 
 	void Start() {
+		audio = GetComponent<AudioSource> ();
 		container = (GameObject)GameObject.FindGameObjectWithTag ("OpenGate");
         initialPosition = new Vector3(transform.parent.position.x, transform.parent.position.y, transform.parent.position.z);
 	}
@@ -82,6 +84,9 @@ public class GateController : MonoBehaviour {
 	public void OpenGate(GameEvent e) {
 
 		if (canOpen) {
+			if (audio != null) {
+				audio.Play ();
+			}
 			canOpen = false;
             if (!openedBefore) {
                 EventManager.Instance.TriggerEvent(new StartTimer(0f));
