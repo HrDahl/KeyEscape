@@ -81,3 +81,14 @@ public class RemoveUI : GameEvent {
         this.amountToRemove = amountToRemove;
     }
 }
+
+public class EnemySpottedEvent : GameEvent {
+
+	public Vector3 pos;
+
+	public EnemySpottedEvent(Vector3 pos) 
+	{
+		this.pos = pos;
+	}
+
+}
